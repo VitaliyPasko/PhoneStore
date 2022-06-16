@@ -1,0 +1,27 @@
+@model List<Basket>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Корзина</h2>
+<table style="width: 100%">
+    <tr>
+        <th>Id</th>
+        <th>Наименование</th>
+        <th>Компания</th>
+        <th>Стоимость</th>
+        <th></th>
+    </tr>
+    @foreach (var basket in Model)
+    {
+        <tr>
+            <td>@basket.PhoneId</td>
+            <td>@basket.Phone.Name</td>
+            <td>@basket.Phone.Company</td>
+            <td>@basket.Phone.Price</td>
+            <td><a asp-route-id="@basket.PhoneId" asp-action="Remove" asp-controller="Basket" class="btn btn-outline-danger">Удалить из корзины</a></td>
+        </tr>
+    }
+</table>

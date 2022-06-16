@@ -1,0 +1,10 @@
+@model ResponseMessageViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>@Model.Status : @Model.Message</h2>
+
+<a asp-action="Index" asp-controller="Basket">Перейти в корзину</a>

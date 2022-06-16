@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Models;
 
@@ -13,7 +14,10 @@ namespace PhoneStore.Controllers
         {
             _db = db;
         }
-
+        /// <summary>
+        /// Действие, которое возвращает страницу со списком смартфонов
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index()
         {
