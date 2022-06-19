@@ -38,9 +38,7 @@ namespace PhoneStore.Services
         {
             var basket = _context.Baskets.FirstOrDefault(b => b.PhoneId == id);
             if (basket is null)
-            {
                 return;
-            }
 
             _context.Baskets.Remove(basket);
             _context.SaveChanges();
