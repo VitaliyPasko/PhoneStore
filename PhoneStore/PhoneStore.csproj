@@ -12,4 +12,12 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.17" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\Files\book.pdf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Pages" />
+    </ItemGroup>
+
 </Project>

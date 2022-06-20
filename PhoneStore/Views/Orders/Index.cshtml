@@ -1,0 +1,33 @@
+@model List<Order>
+
+@{
+    ViewBag.Title = "Список заказов";
+    Layout = "_Layout";
+}
+
+@if (Model.Count == 0)
+{
+    <h2>Список пуст</h2>
+}
+else
+{
+    <table style="width: 100%">
+    <tr>
+        <th>Id</th>
+        <th>Адрес</th>
+        <th>Контактный телефон</th>
+        <th>Имя пользователя</th>
+        <th>Название телефона</th>
+    </tr>
+    @foreach (var order in Model)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.Address</td>
+            <td>@order.ContactPhone</td>
+            <td>@order.UserName</td>
+            <td>@order.Phone.Name</td>
+        </tr>
+    }
+    </table>
+}

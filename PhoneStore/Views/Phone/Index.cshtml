@@ -21,6 +21,7 @@ else
             <th>Компания</th>
             <th>Стоимость</th>
             <th></th>
+            <th></th>
         </tr>
         @foreach (var phone in Model)
         {
@@ -31,10 +32,18 @@ else
                 <td>@phone.Price</td>
                 <td>
                     <a asp-route-id="@phone.Id"
-                        asp-action="Add"
-                        asp-controller="Basket"
-                        class="btn btn-outline-warning">
+                       asp-action="Add"
+                       asp-controller="Basket"
+                       class="btn btn-outline-warning">
                         В корзину
+                    </a>
+                </td>
+                <td>
+                    <a asp-route-phoneId="@phone.Id"
+                       asp-action="Create"
+                       asp-controller="Orders"
+                       class="btn btn-outline-warning">
+                        Заказать
                     </a>
                 </td>
             </tr>
