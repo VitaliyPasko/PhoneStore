@@ -29,7 +29,7 @@ namespace PhoneStore.Controllers
         {
             var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
             if (phone is null)
-                return Content("Такого телефона нет.");
+                return RedirectToAction("Error", "Errors", new {statusCode = 777});
             Order order = new Order
             {
                 Phone = phone

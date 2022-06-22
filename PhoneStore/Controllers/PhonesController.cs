@@ -6,11 +6,11 @@ using PhoneStore.Models;
 
 namespace PhoneStore.Controllers
 {
-    public class PhoneController : Controller
+    public class PhonesController : Controller
     {
         private readonly MobileContext _db;
 
-        public PhoneController(MobileContext db)
+        public PhonesController(MobileContext db)
         {
             _db = db;
         }
@@ -37,6 +37,29 @@ namespace PhoneStore.Controllers
         {
             _db.Phones.Add(phone);
             _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int phoneId)
+        {
+            var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
+            if (phone is null)
+                return BadRequest();
+            
+            return View(phone);
+        }
+        
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult Confirm(int phoneId)
+        {
+            var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
+            if (phone is null)
+                return BadRequest();
+            _db.Phones.Remove(phone);
+            _db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
     }
