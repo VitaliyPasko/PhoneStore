@@ -5,11 +5,11 @@ using PhoneStore.ViewModels;
 
 namespace PhoneStore.Controllers
 {
-    public class BasketController : Controller
+    public class BasketsController : Controller
     {
         private readonly IBasketService _basketService;
 
-        public BasketController(IBasketService basketService)
+        public BasketsController(IBasketService basketService)
         {
             _basketService = basketService;
         }
