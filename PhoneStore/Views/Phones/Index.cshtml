@@ -6,7 +6,6 @@
 }
 
 <a asp-action="Create" asp-controller="Phones">Добавить устройство</a>
-@* https://localhost:5001/Phone/Create method GET*@
 @if (Model.Count == 0)
 {
     <h2>Список пуст.</h2>
@@ -57,5 +56,15 @@ else
             </tr>
         }
     </table>
+    <form asp-action="Delete" asp-controller="Phones" method="get">
+        <select name="phoneId" id="">
+            @foreach (var phone in Model)
+            {
+                <option value="@phone.Id">@phone.Name</option>
+            }
+        </select>
+        <button type="submit">delete</button>
+    </form>
+    
 }
 
