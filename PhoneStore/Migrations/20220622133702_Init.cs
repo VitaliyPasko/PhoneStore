@@ -2,7 +2,7 @@
 
 namespace PhoneStore.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,25 @@ namespace PhoneStore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Phones", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Baskets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PhoneId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Baskets_Phones_PhoneId",
+                        column: x => x.PhoneId,
+                        principalTable: "Phones",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,6 +63,11 @@ namespace PhoneStore.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Baskets_PhoneId",
+                table: "Baskets",
+                column: "PhoneId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_PhoneId",
                 table: "Orders",
                 column: "PhoneId");
@@ -51,6 +75,9 @@ namespace PhoneStore.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Baskets");
+
             migrationBuilder.DropTable(
                 name: "Orders");
 

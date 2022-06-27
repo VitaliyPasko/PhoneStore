@@ -8,8 +8,8 @@ using PhoneStore.Models;
 namespace PhoneStore.Migrations
 {
     [DbContext(typeof(MobileContext))]
-    [Migration("20220616111154_AddBasketEntity")]
-    partial class AddBasketEntity
+    [Migration("20220622133702_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

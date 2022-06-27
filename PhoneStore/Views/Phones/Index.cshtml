@@ -1,7 +1,7 @@
 @model List<Phone>
 
 @{
-    ViewBag.Title = @"title";
+    ViewBag.Title = "Смартфоны";
     Layout = "_Layout";
 }
 <a asp-action="Create" asp-controller="Phones">Добавить устройство</a>
@@ -31,7 +31,7 @@ else
                 <td>
                     <a asp-route-id="@phone.Id"
                        asp-action="Add"
-                       asp-controller="Basket"
+                       asp-controller="Baskets"
                        class="btn btn-outline-warning">
                         В корзину
                     </a>
@@ -52,9 +52,16 @@ else
                         Изменить
                     </a>
                 </td>
+                <td>
+                    <a asp-route-phoneId="@phone.Id"
+                       asp-action="Delete"
+                       asp-controller="Phones"
+                       class="btn btn-danger">
+                        Удалить
+                    </a>
+                </td>
             </tr>
         }
     </table>
 }
-
 

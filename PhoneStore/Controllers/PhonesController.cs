@@ -22,13 +22,13 @@ namespace PhoneStore.Controllers
         public IActionResult Index()
         {
             List<Phone> phones = _db.Phones.ToList();
+            
             return View(phones);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            
             return View();
         }
         
@@ -37,6 +37,29 @@ namespace PhoneStore.Controllers
         {
             _db.Phones.Add(phone);
             _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int phoneId)
+        {
+            var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
+            if (phone is null)
+                return BadRequest();
+            
+            return View(phone);
+        }
+        
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult Confirm(int phoneId)
+        {
+            var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
+            if (phone is null)
+                return BadRequest();
+            _db.Phones.Remove(phone);
+            _db.SaveChanges();
+            
             return RedirectToAction("Index");
         }
 
