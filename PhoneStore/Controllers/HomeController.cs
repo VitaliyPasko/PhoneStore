@@ -26,45 +26,6 @@ namespace PhoneStore.Controllers
             return View();
         }
 
-        // [HttpGet]
-        // public IActionResult Test()
-        // {
-        //     string filePath = Path.Combine(_environment.ContentRootPath, "Files/test.pdf");
-        //     string fileType = "application/pdf";
-        //     string fileName = "test.pdf";
-        //     return PhysicalFile(filePath, fileType, fileName);
-        // }
-        
-        // [HttpGet]
-        // public IActionResult Test()
-        // {
-        //     string filePath = Path.Combine(_environment.ContentRootPath, "Files/test.pdf");
-        //     byte[] bytes = System.IO.File.ReadAllBytes(filePath);
-        //     string fileType = "application/pdf";
-        //     string fileName = "test.pdf";
-        //     return File(bytes, fileType, fileName);
-        // }
-        
-        // [HttpGet]
-        // public IActionResult Test()
-        // {
-        //     string filePath = Path.Combine(_environment.ContentRootPath, "Files/test.pdf");
-        //     byte[] bytes = System.IO.File.ReadAllBytes(filePath);
-        //     string fileType = "application/pdf";
-        //     string fileName = "test.pdf";
-        //     return File(bytes, fileType, fileName);
-        // }
-        
-        // [HttpGet]
-        // public IActionResult Test()
-        // {
-        //     string filePath = Path.Combine(_environment.ContentRootPath, "Files/test.pdf");
-        //     FileStream stream = new FileStream(filePath, FileMode.Open);
-        //     string fileType = "application/pdf";
-        //     string fileName = "test.pdf";
-        //     return File(stream, fileType, fileName);
-        // }
-        
         [HttpGet]
         public IActionResult Test()
         {
@@ -77,7 +38,7 @@ namespace PhoneStore.Controllers
         [ActionName("Test2")]
         public string Test(Phone phone)
         {
-            return "tets";
+            return null;
         }
         
         [HttpGet]

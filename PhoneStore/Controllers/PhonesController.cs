@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using PhoneStore.Models;
 
 namespace PhoneStore.Controllers
 {
-    public class PhoneController : Controller
+    public class PhonesController : Controller
     {
         private readonly MobileContext _db;
 
-        public PhoneController(MobileContext db)
+        public PhonesController(MobileContext db)
         {
             _db = db;
         }
@@ -22,13 +22,13 @@ namespace PhoneStore.Controllers
         public IActionResult Index()
         {
             List<Phone> phones = _db.Phones.ToList();
-            
             return View(phones);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            
             return View();
         }
         
@@ -36,6 +36,30 @@ namespace PhoneStore.Controllers
         public IActionResult Create(Phone phone)
         {
             _db.Phones.Add(phone);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int phoneId)
+        {
+            var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
+            if (phone is null)
+            {
+                return BadRequest();
+            }
+            return View(phone);
+        }
+        
+        [HttpPost]
+        public IActionResult Edit(Phone phone)
+        {
+            if (phone is null)
+            {
+                return BadRequest();
+            }
+
+            _db.Phones.Update(phone);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }

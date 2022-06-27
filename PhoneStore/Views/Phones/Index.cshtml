@@ -1,12 +1,10 @@
 @model List<Phone>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = @"title";
     Layout = "_Layout";
 }
-
-<a asp-action="Create" asp-controller="Phone">Добавить устройство</a>
-@* https://localhost:5001/Phone/Create method GET*@
+<a asp-action="Create" asp-controller="Phones">Добавить устройство</a>
 @if (Model.Count == 0)
 {
     <h2>Список пуст.</h2>
@@ -46,8 +44,17 @@ else
                         Заказать
                     </a>
                 </td>
+                <td>
+                    <a asp-route-phoneId="@phone.Id"
+                       asp-action="Edit"
+                       asp-controller="Phones"
+                       class="btn btn-outline-warning">
+                        Изменить
+                    </a>
+                </td>
             </tr>
         }
     </table>
 }
+
 
