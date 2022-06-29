@@ -41,7 +41,6 @@ namespace PhoneStore.Controllers
                 phones = phones.Where(p => string.Equals(p.Name, name, StringComparison.CurrentCultureIgnoreCase));
             }
 
-            var phoneList = phones.ToList();
             return View(phones.ToList());
         }
 
