@@ -20,16 +20,15 @@ namespace PhoneStore
         }
 
         public IConfiguration Configuration { get; }
-        private IServiceCollection _services;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            _services = services;
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MobileContext>(options => options.UseSqlite(connection));
             services.AddControllersWithViews();
             services.AddScoped<IBasketService, BasketService>();
+            services.AddTransient<UploadService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

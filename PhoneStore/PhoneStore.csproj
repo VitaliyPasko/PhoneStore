@@ -17,7 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Phones" />
       <Folder Include="Migrations" />
     </ItemGroup>
 
