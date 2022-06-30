@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhoneStore.Models;
 
 namespace PhoneStore.Migrations
 {
     [DbContext(typeof(MobileContext))]
-    partial class MobileContextModelSnapshot : ModelSnapshot
+    [Migration("20220630161925_AddImageField")]
+    partial class AddImageField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

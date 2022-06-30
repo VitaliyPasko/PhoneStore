@@ -7,5 +7,6 @@ namespace PhoneStore.Models
         public decimal Price { get; set; }
         public int? BrandId { get; set; }
         public Brand Brand { get; set; }
+        public string Image { get; set; }
     }
 }
