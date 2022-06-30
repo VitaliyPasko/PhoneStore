@@ -1,8 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using PhoneStore.Models;
 using PhoneStore.Services;
@@ -29,33 +32,52 @@ namespace PhoneStore.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Index(int? id, string? name)
+        public IActionResult Index(int? brandId, string name)
         {
-            var phones = _db.Phones.AsQueryable();
-            if (id.HasValue)
-            {
-                phones = _db.Phones.Where(p => p.Id == id);
-            }
-            if (!string.IsNullOrEmpty(name))
-            {
-                phones = phones.Where(p => string.Equals(p.Name, name, StringComparison.CurrentCultureIgnoreCase));
-            }
+            
+            IQueryable<Phone> phones = _db.Phones
+                .Include(p => p.Brand)
+                .AsQueryable();
+            IEnumerable<Brand> brands = _db.Brands;
+            
+            if (brandId is > 0)
+                phones = _db.Phones.Where(p => p.BrandId == brandId);
 
-            return View(phones.ToList());
+            return View(new IndexViewModel
+            {
+                Brands = brands,
+                Phones = phones.ToList()
+            });
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            PhoneCreateViewModel model = new PhoneCreateViewModel
+            {
+                Brands = _db.Brands.ToList()
+            };
+            return View(model);
         }
         
         [HttpPost]
-        public IActionResult Create(Phone phone)
+        public IActionResult Create(PhoneCreateViewModel model)
         {
-            _db.Phones.Add(phone);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.Phones.Add(new Phone
+                {
+                    Name = model.Name,
+                    Price = (decimal)model.Price!,
+                    BrandId = model.BrandId
+                });
+                _db.SaveChanges();
+            
+                return RedirectToAction("Index");
+            }
+
+            model.Brands = _db.Brands.ToList();
+            return View("Create", model);
         }
 
         [HttpGet]
@@ -89,7 +111,15 @@ namespace PhoneStore.Controllers
             {
                 return BadRequest();
             }
-            return View(phone);
+            PhoneCreateViewModel model = new PhoneCreateViewModel
+            {
+                Id = phone.Id,
+                Name = phone.Name,
+                Price = phone.Price,
+                BrandId = (int)phone.BrandId,
+                Brands = _db.Brands.ToList()
+            };
+            return View(model);
         }
         
         [HttpPost]

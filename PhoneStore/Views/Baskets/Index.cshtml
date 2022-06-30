@@ -19,7 +19,7 @@
         <tr>
             <td>@basket.PhoneId</td>
             <td>@basket.Phone.Name</td>
-            <td>@basket.Phone.Company</td>
+            <td>@basket.Phone.Brand.Name</td>
             <td>@basket.Phone.Price</td>
             <td><a asp-route-id="@basket.PhoneId" asp-action="Remove" asp-controller="Baskets" class="btn btn-outline-danger">Удалить из корзины</a></td>
         </tr>

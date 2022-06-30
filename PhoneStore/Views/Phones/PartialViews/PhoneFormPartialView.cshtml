@@ -1,13 +1,25 @@
-@model Phone
-<label for="name">
-    Наименование
-    <input id="name" type="text" asp-for="Name">
-</label>
-<label for="company">
-    Производитель
-    <input id="company" type="text" asp-for="Company">
-</label>
-<label for="price">
-    Стоимость
-    <input id="price" type="text" asp-for="Price">
-</label>
+@model PhoneCreateViewModel
+<div class="mb-3">
+    <label asp-for="Name" class="form-label">Наименование</label>
+    <input type="text" class="form-control" asp-for="Name">
+    <div class="form-text">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+</div>
+<div class="mb-3">
+    <label asp-for="Price" class="form-label">Стоимость</label>
+    <input type="text" class="form-control" asp-for="Price">
+    <div class="form-text">
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+</div>
+<div class="mb-3">
+    <label asp-for="BrandId" class="form-label">Производитель</label>
+    <select asp-for="BrandId" class="form-select">
+        @foreach (var brand in Model.Brands)
+        {
+            <option value="@brand.Id">@brand.Name</option>
+        }
+    </select>
+</div>
+

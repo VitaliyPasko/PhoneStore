@@ -1,4 +1,4 @@
-@model Phone
+@model PhoneCreateViewModel
 
 @{
     ViewBag.Title = "Редактирование";
@@ -10,9 +10,15 @@
             @{
                 await Html.RenderPartialAsync("PartialViews/PhoneFormPartialView");
             }
-            <input type="text" hidden asp-for="Id">
+            <input type="text" hidden asp-for="@Model.Id">
             <button type="submit"
                     class="btn btn-outline-warning">Изменить</button>
         </form>
     </div>
 </div>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
