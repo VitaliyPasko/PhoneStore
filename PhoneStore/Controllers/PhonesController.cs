@@ -121,6 +121,7 @@ namespace PhoneStore.Controllers
             return View(model);
         }
         
+        //TODO: Доделать
         [HttpPost]
         public IActionResult Edit(PhoneCreateViewModel model)
         {
