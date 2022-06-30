@@ -33,7 +33,7 @@ namespace PhoneStore.Migrations
                 onDelete: ReferentialAction.Restrict);
             
             migrationBuilder.Sql(@$"UPDATE ""Phones""
-            SET ""Image"" = '~/Files/Phone/Images/DefaultImage.jpg'
+            SET ""Image"" = 'images\phoneImages\default.jpg'
             WHERE ""Image"" IS NULL;");
         }
 

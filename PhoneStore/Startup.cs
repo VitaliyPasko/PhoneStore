@@ -29,6 +29,8 @@ namespace PhoneStore
             services.AddControllersWithViews();
             services.AddScoped<IBasketService, BasketService>();
             services.AddTransient<UploadService>();
+            services.AddTransient<IDefaultPhoneImagePathProvider>(_ =>
+                new DefaultPhoneImagePathProvider(Configuration["PathToDefaultAvatar:Path"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

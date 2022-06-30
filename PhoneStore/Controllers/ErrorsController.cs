@@ -6,6 +6,7 @@ namespace PhoneStore.Controllers
 {
     public class ErrorsController : Controller
     {
+        private const string OppsMessage = "Oops... Ошибка";
         private readonly Dictionary<int, ErrorViewModel> _errorResolver;
 
         public ErrorsController()
@@ -15,25 +16,31 @@ namespace PhoneStore.Controllers
             {
                 StatusCode = 404,
                 Message = "Ресурс не найден",
-                Title = "Oops... Страница не найдена"
+                Title = OppsMessage
             });
             _errorResolver.Add(400, new ErrorViewModel
             {
                 StatusCode = 400,
                 Message = "Сервер не смог обработать запрос",
-                Title = "Oops... Ошибка"
+                Title = OppsMessage
             });
             _errorResolver.Add(500, new ErrorViewModel
             {
                 StatusCode = 500,
                 Message = "Сервер не смог обработать запрос",
-                Title = "Oops... Ошибка"
+                Title = OppsMessage
             });
             _errorResolver.Add(777, new ErrorViewModel
             {
                 StatusCode = 777,
                 Message = "Сущность не найдена",
-                Title = "Oops... Ошибка"
+                Title = OppsMessage
+            });
+            _errorResolver.Add(666, new ErrorViewModel
+            {
+                StatusCode = 666,
+                Message = "Такой файл уже существует. Возможно вы добавляете смартфон, который уже есть в базе данных.",
+                Title = OppsMessage
             });
         }
 

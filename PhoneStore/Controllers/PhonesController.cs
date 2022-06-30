@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using PhoneStore.Models;
 using PhoneStore.Services;
+using PhoneStore.Services.Abstractions;
 using PhoneStore.ViewModels;
 
 namespace PhoneStore.Controllers
@@ -18,14 +18,18 @@ namespace PhoneStore.Controllers
         private readonly MobileContext _db;
         private readonly IHostEnvironment _environment;
         private readonly UploadService _uploadService;
+        private readonly IDefaultPhoneImagePathProvider _imagePathProvider;
 
         public PhonesController(
             MobileContext db, 
-            IHostEnvironment environment, UploadService uploadService)
+            IHostEnvironment environment, 
+            UploadService uploadService, 
+            IDefaultPhoneImagePathProvider imagePathProvider)
         {
             _db = db;
             _environment = environment;
             _uploadService = uploadService;
+            _imagePathProvider = imagePathProvider;
         }
        
         [HttpGet]
@@ -56,19 +60,40 @@ namespace PhoneStore.Controllers
         }
         
         [HttpPost]
-        public IActionResult Create(PhoneCreateViewModel model)
+        public async Task<IActionResult> Create(PhoneCreateViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.Phones.Add(new Phone
+                if (ModelState.IsValid)
                 {
-                    Name = model.Name,
-                    Price = (decimal)model.Price!,
-                    BrandId = model.BrandId
-                });
-                _db.SaveChanges();
+                    string imagePath;
+                    if (model.File is null)
+                        imagePath = _imagePathProvider.GetPathToDefaultImage();
+                    else
+                    {
+                        var brand = _db.Brands.FirstOrDefault(b => b.Id == model.BrandId);
+                        string dirPath = Path.Combine(_environment.ContentRootPath, $"wwwroot\\images\\phoneImages\\{brand!.Name}");
+                        string fileName = $"{model.File.FileName}";
+                        await _uploadService.UploadAsync(dirPath, fileName, model.File);
+                        imagePath = $"images\\phoneImages\\{brand!.Name}\\{fileName}";
+                    }
+                
+                    _db.Phones.Add(new Phone
+                    {
+                        Image = imagePath,
+                        Name = model.Name,
+                        Price = (decimal)model.Price!,
+                        BrandId = model.BrandId
+                    });
+                    await _db.SaveChangesAsync();
             
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+            }
+            //TODO: Добавить кастомный exception
+            catch (FileNotFoundException e)
+            {
+                return RedirectToAction("Error", "Errors", new {statusCode = 666});
             }
 
             model.Brands = _db.Brands.ToList();

@@ -22,4 +22,11 @@
         }
     </select>
 </div>
+<div class="mb-3">
+  <label asp-for="File" class="form-label">Добавьте изображение</label>
+    <input class="form-control" type="file" asp-for="File">
+    <div class="form-text">
+        <span asp-validation-for="File" class="text-danger"></span>
+    </div>
+</div>
 
