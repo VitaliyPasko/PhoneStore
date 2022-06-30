@@ -27,19 +27,14 @@ namespace PhoneStore.Controllers
             _environment = environment;
             _uploadService = uploadService;
         }
-        /// <summary>
-        /// Действие, которое возвращает страницу со списком смартфонов
-        /// </summary>
-        /// <returns></returns>
+       
         [HttpGet]
         public IActionResult Index(int? brandId, string name)
         {
-            
-            IQueryable<Phone> phones = _db.Phones
-                .Include(p => p.Brand)
-                .AsQueryable();
             IEnumerable<Brand> brands = _db.Brands;
-            
+            IQueryable<Phone> phones = _db.Phones
+                .AsQueryable();
+
             if (brandId is > 0)
                 phones = _db.Phones.Where(p => p.BrandId == brandId);
 
@@ -106,6 +101,7 @@ namespace PhoneStore.Controllers
         [HttpGet]
         public IActionResult Edit(int phoneId)
         {
+            var brands = _db.Brands.ToList();
             var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
             if (phone is null)
             {
@@ -117,7 +113,7 @@ namespace PhoneStore.Controllers
                 Name = phone.Name,
                 Price = phone.Price,
                 BrandId = (int)phone.BrandId,
-                Brands = _db.Brands.ToList()
+                Brands = brands
             };
             return View(model);
         }
@@ -150,6 +146,19 @@ namespace PhoneStore.Controllers
             await _uploadService.UploadAsync(dirPath, fileName, model.File);
 
             return Ok("Файл успешно загружен");
+        }
+
+        [HttpGet]
+        public IActionResult About(int? id)
+        {
+            if (!id.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
+            var phone = _db.Phones
+                .Include(p => p.Brand)
+                .FirstOrDefault(p => p.Id == id);
+            if (phone is null)
+                return RedirectToAction("Error", "Errors", new {statusCode = 777});
+            
+            return View(phone);
         }
     }
 }
