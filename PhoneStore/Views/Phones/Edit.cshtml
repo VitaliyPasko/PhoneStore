@@ -11,8 +11,11 @@
                 await Html.RenderPartialAsync("PartialViews/PhoneFormPartialView");
             }
             <input type="text" hidden asp-for="@Model.Id">
+            <input type="text" hidden asp-for="@Model.Image">
             <button type="submit"
-                    class="btn btn-outline-warning">Изменить</button>
+                    class="btn btn-outline-warning">
+                Изменить
+            </button>
         </form>
     </div>
 </div>

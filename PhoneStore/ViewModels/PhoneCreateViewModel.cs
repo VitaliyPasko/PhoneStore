@@ -19,5 +19,6 @@ namespace PhoneStore.ViewModels
         public int BrandId { get; set; }
         public List<Brand> Brands { get; set; }
         public IFormFile File { get; set; }
+        public string Image { get; set; }
     }
 }
