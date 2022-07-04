@@ -13,10 +13,10 @@
             <div class="form_row">
                 <label for="name">
                     Имя:
-                    <input 
-                        id="name" 
-                        type="text" 
-                        name="filteringCriterionByName" 
+                    <input
+                        id="name"
+                        type="text"
+                        name="filterByName"
                         value="@Model.Filter">
                 </label>
                 <input type="text" hidden name="page" value="@Model.PageViewModel.Page">
@@ -33,7 +33,7 @@
                 asp-action="Index"
                 asp-controller="Users"
                 asp-route-order="@ViewBag.NameSort"
-                asp-route-filteringCriterionByName="@Model.Filter">
+                asp-route-filterByName="@Model.Filter">
                 Имя
             </a>
         </th>
@@ -42,7 +42,7 @@
                 asp-action="Index"
                 asp-controller="Users"
                 asp-route-order="@ViewBag.AgeSort"
-                asp-route-filteringCriterionByName="@Model.Filter">
+                asp-route-filterByName="@Model.Filter">
                 Возраст
             </a>
         </th>
@@ -55,18 +55,23 @@
         </tr>
     }
 </table>
-
 @if (Model.PageViewModel.HasPrevious)
 {
-    <a asp-action="Index" asp-controller="Users"
-       asp-route-page="@(Model.PageViewModel.Page - 1)" 
-       asp-route-filteringCriterionByName="@Model.Filter" 
-       class="btn btn-outline-warning">Назад</a>
+    <a
+        asp-action="Index"
+        asp-controller="Users"
+        asp-route-page="@(Model.PageViewModel.Page - 1)" class="btn btn-outline-warning"
+        asp-route-filterByName="@Model.Filter">
+        Назад
+    </a>
 }
 @if (Model.PageViewModel.HasNext)
 {
-    <a asp-action="Index" asp-controller="Users" 
-       asp-route-page="@(Model.PageViewModel.Page + 1)" 
-       asp-route-filteringCriterionByName="@Model.Filter" 
-       class="btn btn-outline-warning">Вперед</a>
+    <a
+        asp-action="Index"
+        asp-controller="Users"
+        asp-route-page="@(Model.PageViewModel.Page + 1)" class="btn btn-outline-warning"
+        asp-route-filterByName="@Model.Filter">
+        Вперед
+    </a>
 }

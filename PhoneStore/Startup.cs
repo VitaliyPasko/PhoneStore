@@ -32,6 +32,10 @@ namespace PhoneStore
             services.AddTransient<IDefaultPhoneImagePathProvider>(_ =>
                 new DefaultPhoneImagePathProvider(Configuration["PathToDefaultAvatar:Path"]));
             services.AddTransient<IPhoneService, PhoneService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUsersSortService, UsersSortService>();
+            services.AddTransient<IUsersFilter, UsersFilter>();
+            services.AddTransient<IPaginationService, PaginationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
