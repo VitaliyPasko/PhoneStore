@@ -1,0 +1,72 @@
+@model UsersViewModel
+
+@{
+    ViewBag.Title = "Пользователи";
+    Layout = "_Layout";
+}
+
+<h2>Список пользователей</h2>
+
+<div class="row">
+    <div class="phone_add_form col-md-6">
+        <form asp-action="Index" asp-controller="Users" method="get">
+            <div class="form_row">
+                <label for="name">
+                    Имя:
+                    <input 
+                        id="name" 
+                        type="text" 
+                        name="filteringCriterionByName" 
+                        value="@Model.Filter">
+                </label>
+                <input type="text" hidden name="page" value="@Model.PageViewModel.Page">
+                <button class="btn btn-outline-warning">Отправить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table style="width: 100%">
+    <tr>
+        <th>
+            <a
+                asp-action="Index"
+                asp-controller="Users"
+                asp-route-order="@ViewBag.NameSort"
+                asp-route-filteringCriterionByName="@Model.Filter">
+                Имя
+            </a>
+        </th>
+        <th>
+            <a
+                asp-action="Index"
+                asp-controller="Users"
+                asp-route-order="@ViewBag.AgeSort"
+                asp-route-filteringCriterionByName="@Model.Filter">
+                Возраст
+            </a>
+        </th>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.Name</td>
+            <td>@user.Age</td>
+        </tr>
+    }
+</table>
+
+@if (Model.PageViewModel.HasPrevious)
+{
+    <a asp-action="Index" asp-controller="Users"
+       asp-route-page="@(Model.PageViewModel.Page - 1)" 
+       asp-route-filteringCriterionByName="@Model.Filter" 
+       class="btn btn-outline-warning">Назад</a>
+}
+@if (Model.PageViewModel.HasNext)
+{
+    <a asp-action="Index" asp-controller="Users" 
+       asp-route-page="@(Model.PageViewModel.Page + 1)" 
+       asp-route-filteringCriterionByName="@Model.Filter" 
+       class="btn btn-outline-warning">Вперед</a>
+}
