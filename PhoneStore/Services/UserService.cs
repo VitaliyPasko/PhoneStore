@@ -1,5 +1,3 @@
-
-using System.Linq;
 using System.Threading.Tasks;
 using PhoneStore.Helpers;
 using PhoneStore.Models;

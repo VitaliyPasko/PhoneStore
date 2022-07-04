@@ -55,23 +55,29 @@
         </tr>
     }
 </table>
-@if (Model.PageViewModel.HasPrevious)
-{
-    <a
-        asp-action="Index"
-        asp-controller="Users"
-        asp-route-page="@(Model.PageViewModel.Page - 1)" class="btn btn-outline-warning"
-        asp-route-filterByName="@Model.Filter">
-        Назад
-    </a>
-}
-@if (Model.PageViewModel.HasNext)
-{
-    <a
-        asp-action="Index"
-        asp-controller="Users"
-        asp-route-page="@(Model.PageViewModel.Page + 1)" class="btn btn-outline-warning"
-        asp-route-filterByName="@Model.Filter">
-        Вперед
-    </a>
-}
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-left">
+        @if (Model.PageViewModel.HasPrevious)
+        {
+            <li class="page-item">
+                <a 
+                    asp-action="Index" 
+                    asp-controller="Users" 
+                    class="page-link"
+                    asp-route-page="@(Model.PageViewModel.Page - 1)"
+                    asp-route-filterByName="@Model.Filter">Previous</a>
+            </li>
+        }
+        @if (Model.PageViewModel.HasNext)
+        {
+            <li class="page-item">
+                <a 
+                    class="page-link"
+                     asp-action="Index"
+                    asp-controller="Users"
+                    asp-route-page="@(Model.PageViewModel.Page + 1)" 
+                    asp-route-filterByName="@Model.Filter">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
