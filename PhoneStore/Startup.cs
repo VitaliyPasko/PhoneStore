@@ -25,7 +25,7 @@ namespace PhoneStore
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MobileContext>(options => options.UseSqlite(connection));
+            services.AddDbContext<MobileContext>(options => options.UseNpgsql(connection));
             services.AddControllersWithViews();
             services.AddScoped<IBasketService, BasketService>();
             services.AddTransient<UploadService>();
