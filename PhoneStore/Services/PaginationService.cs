@@ -1,17 +1,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PhoneStore.Models;
 using PhoneStore.Services.Abstractions;
 
 namespace PhoneStore.Services
 {
-    public class PaginationService : IPaginationService
+    public class PaginationService<T> : IPaginationService<T>
     {
-        public async Task<(IQueryable<User>, int)> GetABatchOfData(IQueryable<User> users, int page, int pageSize)
+        public async Task<(IQueryable<T>, int)> GetABatchOfData(IQueryable<T> elements, int page, int pageSize)
         {
-            int count = await users.CountAsync();
-            return (users.Skip((page - 1) * pageSize).Take(pageSize), count);
+            int count = await elements.CountAsync();
+            return (elements.Skip((page - 1) * pageSize).Take(pageSize), count);
         }
+
+        
     }
 }

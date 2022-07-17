@@ -1,11 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
-using PhoneStore.Models;
 
 namespace PhoneStore.Services.Abstractions
 {
-    public interface IPaginationService
+    public interface IPaginationService<T>
     {
-        Task<(IQueryable<User>, int)> GetABatchOfData(IQueryable<User> users, int page, int pageSize);
+        Task<(IQueryable<T>, int)> GetABatchOfData(IQueryable<T> elements, int page, int pageSize);
     }
 }

@@ -12,13 +12,13 @@ namespace PhoneStore.Services
         private readonly MobileContext _db;
         private readonly IUsersSortService _sortService;
         private readonly IUsersFilter _usersFilter;
-        private readonly IPaginationService _paginationService;
+        private readonly IPaginationService<User> _paginationService;
 
         public UserService(
             MobileContext db, 
             IUsersSortService sortService, 
             IUsersFilter usersFilter, 
-            IPaginationService paginationService)
+            IPaginationService<User> paginationService)
         {
             _db = db;
             _sortService = sortService;
