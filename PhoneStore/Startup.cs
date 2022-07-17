@@ -35,30 +35,12 @@ namespace PhoneStore
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUsersSortService, UsersSortService>();
             services.AddTransient<IUsersFilter, UsersFilter>();
-            services.AddTransient<IPaginationService, PaginationService>();
+            services.AddTransient<IPaginationService<User>, PaginationService<User>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // app.Run(async context =>
-            // {
-            //     var sb = new StringBuilder();
-            //     sb.Append("<h1>Все сервисы</h1>");
-            //     sb.Append("<table>");
-            //     sb.Append("<tr><th>Тип</th><th>Lifetime</th><th>Реализация</th></tr>");
-            //     foreach (var svc in _services)
-            //     {
-            //         sb.Append("<tr>");
-            //         sb.Append($"<td>{svc.ServiceType.FullName}</td>");
-            //         sb.Append($"<td>{svc.Lifetime}</td>");
-            //         sb.Append($"<td>{svc.ImplementationType?.FullName}</td>");
-            //         sb.Append("</tr>");
-            //     }
-            //     sb.Append("</table>");
-            //     context.Response.ContentType = "text/html;charset=utf-8";
-            //     await context.Response.WriteAsync(sb.ToString());
-            // });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
