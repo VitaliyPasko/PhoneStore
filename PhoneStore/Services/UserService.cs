@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
 using PhoneStore.Services.Abstractions;
@@ -13,27 +14,31 @@ namespace PhoneStore.Services
         private readonly IUsersSortService _sortService;
         private readonly IUsersFilter _usersFilter;
         private readonly IPaginationService<User> _paginationService;
+        private readonly IConfiguration _configuration;
 
         public UserService(
             MobileContext db, 
             IUsersSortService sortService, 
             IUsersFilter usersFilter, 
-            IPaginationService<User> paginationService)
+            IPaginationService<User> paginationService, 
+            IConfiguration configuration)
         {
             _db = db;
             _sortService = sortService;
             _usersFilter = usersFilter;
             _paginationService = paginationService;
+            _configuration = configuration;
         }
 
-        public async Task<UsersViewModel> GetAll(Order order, string filterByName, int pageSize, int page)
+        public async Task<UsersViewModel> GetAll(Order order, string filterByName, int page)
         {
+            var pageSize = int.Parse(_configuration["UsersPageSize"]); //Размер страницы берется из appsettings.json
             var users = _db.Users.AsQueryable();
             var filteredUsers = _usersFilter.FilterByName(users, filterByName);
             var sortedUsers = _sortService.Sort(filteredUsers, order);
-            var paginationData = await _paginationService.GetABatchOfData(sortedUsers, page, pageSize);
+            var (queryable, count) = await _paginationService.GetABatchOfData(sortedUsers, page, pageSize);
             
-            return paginationData.Item1.MapToUsersViewModel(filterByName, page, paginationData.Item2, pageSize);
+            return queryable.MapToUsersViewModel(filterByName, page, count, pageSize);
         }
     }
 }

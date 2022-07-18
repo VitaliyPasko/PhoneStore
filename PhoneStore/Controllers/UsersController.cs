@@ -17,10 +17,9 @@ namespace PhoneStore.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string filterByName, Order order = Order.AgeAsc, int page = 1)
         {
-            int pageSize = 2;
             ViewBag.NameSort = order == Order.NameAsc ? Order.NameDesc : Order.NameAsc;
             ViewBag.AgeSort = order == Order.AgeAsc ? Order.AgeDesc : Order.AgeAsc;
-            var model = await _userService.GetAll(order, filterByName, pageSize, page);
+            var model = await _userService.GetAll(order, filterByName, page);
             
             return View(model);
         }

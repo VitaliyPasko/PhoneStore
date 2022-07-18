@@ -6,6 +6,6 @@ namespace PhoneStore.Services.Abstractions
 {
     public interface IUserService
     {
-        Task<UsersViewModel> GetAll(Order order, string filterByName, int pageSize, int page);
+        Task<UsersViewModel> GetAll(Order order, string filterByName, int page);
     }
 }

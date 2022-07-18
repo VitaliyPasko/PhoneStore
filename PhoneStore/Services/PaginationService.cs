@@ -12,7 +12,5 @@ namespace PhoneStore.Services
             int count = await elements.CountAsync();
             return (elements.Skip((page - 1) * pageSize).Take(pageSize), count);
         }
-
-        
     }
 }
