@@ -32,7 +32,7 @@ namespace PhoneStore.Services
 
         public async Task<UsersViewModel> GetAll(Order order, string filterByName, int page)
         {
-            var pageSize = int.Parse(_configuration["UsersPageSize"]); //Размер страницы берется из appsettings.json
+            var pageSize = int.Parse(_configuration["UsersPageSize"]);
             var users = _db.Users.AsQueryable();
             var filteredUsers = _usersFilter.FilterByName(users, filterByName);
             var sortedUsers = _sortService.Sort(filteredUsers, order);
