@@ -50,7 +50,7 @@ namespace PhoneStore
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+            app.UseAuthorization().UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

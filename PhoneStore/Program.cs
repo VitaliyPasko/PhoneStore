@@ -24,7 +24,7 @@ namespace PhoneStore
             {
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 RoleManager<Role> rolesManager = services.GetRequiredService<RoleManager<Role>>();
-                await AdminInitializer.SeedAdminUser(rolesManager, userManager);
+                await AdminInitializerService.SeedAdminUser(rolesManager, userManager);
             }
             catch (Exception ex)
             {

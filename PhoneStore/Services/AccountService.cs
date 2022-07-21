@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using PhoneStore.Enums;
@@ -73,9 +72,7 @@ namespace PhoneStore.Services
             };
         }
 
-        public Task<IdentityResult> LogOf()
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task LogOf() 
+            => await _signInManager.SignOutAsync();
     }
 }

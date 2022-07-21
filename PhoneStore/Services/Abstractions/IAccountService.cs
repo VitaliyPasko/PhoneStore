@@ -8,6 +8,6 @@ namespace PhoneStore.Services.Abstractions
     {
         Task<IdentityResult> Register(RegisterViewModel model);
         Task<IdentityResult> LogIn(LoginViewModel model);
-        Task<IdentityResult> LogOf();
+        Task LogOf();
     }
 }

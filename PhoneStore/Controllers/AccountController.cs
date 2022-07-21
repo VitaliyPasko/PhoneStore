@@ -66,5 +66,13 @@ namespace PhoneStore.Controllers
             
             return View(model);
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOff()
+        {
+            await _accountService.LogOf();
+            return RedirectToAction("Index", "Phones");
+        }
     }
 }

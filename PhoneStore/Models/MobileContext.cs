@@ -1,8 +1,9 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace PhoneStore.Models
 {
-    public class MobileContext : DbContext
+    public class MobileContext : IdentityDbContext<User, Role, int>
     {
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Order> Orders { get; set; }
