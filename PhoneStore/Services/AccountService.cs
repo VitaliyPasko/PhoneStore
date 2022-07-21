@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using PhoneStore.Enums;
@@ -24,6 +26,12 @@ namespace PhoneStore.Services
 
         public async Task<IdentityResult> Register(RegisterViewModel model)
         {
+            if (model is null) return new IdentityResult
+            {
+                StatusCodes = StatusCodes.Error, 
+                ErrorMessages = new List<string>{"Внутренняя ошибка"}
+            };
+            
             User user = new User
             {
                 Email = model.Email,
@@ -44,12 +52,25 @@ namespace PhoneStore.Services
                 ErrorMessages = errors, 
                 StatusCodes = StatusCodes.Error
             };
-
         }
 
-        public Task<IdentityResult> LogIn(LoginViewModel model)
+        public async Task<IdentityResult> LogIn(LoginViewModel model)
         {
-            throw new System.NotImplementedException();
+            User user = await _userManager.FindByEmailAsync(model.Email);
+            SignInResult result = await _signInManager.PasswordSignInAsync(
+                user,
+                model.Password,
+                model.RememberMe,
+                false
+            );
+            if (result.Succeeded)
+                return new IdentityResult {StatusCodes = StatusCodes.Success};
+            
+            return new IdentityResult
+            {
+                StatusCodes = StatusCodes.Error,
+                ErrorMessages = new List<string>{"Неправильный логин и (или) пароль"}
+            };
         }
 
         public Task<IdentityResult> LogOf()
