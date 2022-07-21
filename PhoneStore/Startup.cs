@@ -22,11 +22,12 @@ namespace PhoneStore
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MobileContext>(options => options.UseNpgsql(connection));
+            services.AddDbContext<MobileContext>(options => options.UseNpgsql(connection))
+                .AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<MobileContext>();
             services.AddControllersWithViews();
             services.AddApplicationServices(Configuration);
         }
