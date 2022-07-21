@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PhoneStore.Helpers;
 using PhoneStore.Models;
 using PhoneStore.Services;
 using PhoneStore.Services.Abstractions;
@@ -27,15 +28,7 @@ namespace PhoneStore
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<MobileContext>(options => options.UseNpgsql(connection));
             services.AddControllersWithViews();
-            services.AddScoped<IBasketService, BasketService>();
-            services.AddTransient<UploadService>();
-            services.AddTransient<IDefaultPhoneImagePathProvider>(_ =>
-                new DefaultPhoneImagePathProvider(Configuration["PathToDefaultAvatar:Path"]));
-            services.AddTransient<IPhoneService, PhoneService>();
-            // services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IUsersSortService, UsersSortService>();
-            services.AddTransient<IUsersFilter, UsersFilter>();
-            services.AddTransient<IPaginationService<User>, PaginationService<User>>();
+            services.AddApplicationServices(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
