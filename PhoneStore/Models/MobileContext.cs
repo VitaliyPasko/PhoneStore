@@ -8,7 +8,6 @@ namespace PhoneStore.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        public DbSet<User> Users { get; set; }
 
         public MobileContext(DbContextOptions<MobileContext> options) : base(options)
         {

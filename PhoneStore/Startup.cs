@@ -32,7 +32,7 @@ namespace PhoneStore
             services.AddTransient<IDefaultPhoneImagePathProvider>(_ =>
                 new DefaultPhoneImagePathProvider(Configuration["PathToDefaultAvatar:Path"]));
             services.AddTransient<IPhoneService, PhoneService>();
-            services.AddTransient<IUserService, UserService>();
+            // services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUsersSortService, UsersSortService>();
             services.AddTransient<IUsersFilter, UsersFilter>();
             services.AddTransient<IPaginationService<User>, PaginationService<User>>();
