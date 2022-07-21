@@ -21,6 +21,7 @@ namespace PhoneStore.Helpers
             services.AddTransient<IUsersSortService, UsersSortService>();
             services.AddTransient<IUsersFilter, UsersFilter>();
             services.AddTransient<IPaginationService<User>, PaginationService<User>>();
+            services.AddTransient<IAccountService, AccountService>();
         }
     }
 }
