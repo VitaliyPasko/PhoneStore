@@ -50,6 +50,5 @@ namespace PhoneStore.Services
             _db.Phones.Add(entity.MapToPhone(imagePath));
             await _db.SaveChangesAsync();
         }
-
     }
 }

@@ -1,8 +1,9 @@
 using System;
+using PhoneStore.Models;
 
-namespace PhoneStore.Models
+namespace PhoneStore.ViewModels
 {
-    public class Feedback
+    public class FeedbackViewModel
     {
         public int Id { get; set; }
         public int UserId { get; set; }

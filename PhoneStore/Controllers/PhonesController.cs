@@ -142,11 +142,32 @@ namespace PhoneStore.Controllers
             if (!phoneId.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
             var phone = _db.Phones
                 .Include(p => p.Brand)
+                .Include(p => p.Feedbacks)
+                    .ThenInclude(f => f.User)
                 .FirstOrDefault(p => p.Id == phoneId);
             if (phone is null)
                 return RedirectToAction("Error", "Errors", new {statusCode = 777});
-            
-            return View(phone);
+            var phoneViewModel = new PhoneViewModel
+            {
+                Brand = phone.Brand,
+                Feedbacks = phone.Feedbacks.Select(f => new FeedbackViewModel
+                {
+                    Id = f.Id,
+                    Phone = f.Phone,
+                    Text = f.Text,
+                    User = f.User,
+                    CreationDateTime = f.CreationDateTime,
+                    UserId = f.UserId,
+                    PhoneId = f.PhoneId
+                })
+                    .OrderByDescending(f => f.CreationDateTime)
+                    .ToList(),
+                Image = phone.Image,
+                Name = phone.Name,
+                Price = phone.Price,
+                Id = phone.Id
+            };
+            return View(phoneViewModel);
         }
     }
 }

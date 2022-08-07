@@ -1,15 +1,15 @@
 using System.Collections.Generic;
+using PhoneStore.Models;
 
-namespace PhoneStore.Models
+namespace PhoneStore.ViewModels
 {
-    public class Phone
+    public class PhoneViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int? BrandId { get; set; }
         public Brand Brand { get; set; }
         public string Image { get; set; }
-        public List<Feedback> Feedbacks { get; set; }
+        public List<FeedbackViewModel> Feedbacks { get; set; }
     }
 }
