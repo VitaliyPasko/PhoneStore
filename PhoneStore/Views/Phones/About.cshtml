@@ -6,3 +6,10 @@
 }
 
 <h2>@Model.Name</h2>
+<div class="card mb-3">
+    <img class="card-img-top w-50" src="~/@Model.Image" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Brand.Name</h5>
+        <p class="card-text">@(Model.Price.ToString("C2"))</p>
+    </div>
+</div>

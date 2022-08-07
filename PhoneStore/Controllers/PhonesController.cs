@@ -137,12 +137,12 @@ namespace PhoneStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult About(int? id)
+        public IActionResult About(int? phoneId)
         {
-            if (!id.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
+            if (!phoneId.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
             var phone = _db.Phones
                 .Include(p => p.Brand)
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == phoneId);
             if (phone is null)
                 return RedirectToAction("Error", "Errors", new {statusCode = 777});
             

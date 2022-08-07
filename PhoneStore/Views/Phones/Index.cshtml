@@ -66,6 +66,12 @@ else
                               Изменить
                           </a>
                           <a asp-route-phoneId="@phone.Id"
+                             asp-action="About"
+                             asp-controller="Phones"
+                             class="dropdown-item">
+                              Подробнее
+                          </a>
+                          <a asp-route-phoneId="@phone.Id"
                              asp-action="Delete"
                              asp-controller="Phones"
                              class="dropdown-item bg-danger">
