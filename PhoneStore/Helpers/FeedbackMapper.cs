@@ -13,6 +13,8 @@ namespace PhoneStore.Helpers
                 Text = self.Text,
                 PhoneId = self.PhoneId,
                 UserId = self.UserId,
+                User = self.User.MapToUserViewModel(),
+                Phone = self.Phone.MapToPhoneViewModel(),
                 CreationDateTime = self.CreationDateTime
             };
             return feedbackViewModel;

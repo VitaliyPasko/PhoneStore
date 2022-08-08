@@ -1,6 +1,5 @@
 using System;
 using PhoneStore.ViewModels.Account;
-using PhoneStore.ViewModels.Account;
 using PhoneStore.ViewModels.PhoneViewModels;
 
 namespace PhoneStore.ViewModels.Feedback

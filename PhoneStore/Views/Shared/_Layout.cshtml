@@ -53,6 +53,16 @@
 <div class="container">
     <main role="main" class="pb-3">
         <div id="results"></div>
+        <button id="getData" class="btn btn-outline-warning">Получить данные</button>
+        <div id="widget">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong id="user"></strong> = <span id="usersCount"></span><br>
+              <strong id="feedback"></strong> = <span id="feedbacksCount"></span><br>
+              <button id="widgetClose" type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        </div>
         @RenderBody()
     </main>
 </div>
