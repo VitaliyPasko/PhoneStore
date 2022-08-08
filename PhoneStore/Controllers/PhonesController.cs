@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels;
+using PhoneStore.ViewModels.Account;
+using PhoneStore.ViewModels.PhoneViewModels;
 
 namespace PhoneStore.Controllers
 {
@@ -139,35 +141,16 @@ namespace PhoneStore.Controllers
         [HttpGet]
         public IActionResult About(int? phoneId)
         {
-            if (!phoneId.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
-            var phone = _db.Phones
-                .Include(p => p.Brand)
-                .Include(p => p.Feedbacks)
-                    .ThenInclude(f => f.User)
-                .FirstOrDefault(p => p.Id == phoneId);
-            if (phone is null)
-                return RedirectToAction("Error", "Errors", new {statusCode = 777});
-            var phoneViewModel = new PhoneViewModel
+            try
             {
-                Brand = phone.Brand,
-                Feedbacks = phone.Feedbacks.Select(f => new FeedbackViewModel
-                {
-                    Id = f.Id,
-                    Phone = f.Phone,
-                    Text = f.Text,
-                    User = f.User,
-                    CreationDateTime = f.CreationDateTime,
-                    UserId = f.UserId,
-                    PhoneId = f.PhoneId
-                })
-                    .OrderByDescending(f => f.CreationDateTime)
-                    .ToList(),
-                Image = phone.Image,
-                Name = phone.Name,
-                Price = phone.Price,
-                Id = phone.Id
-            };
-            return View(phoneViewModel);
+                if (!phoneId.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
+                var phoneViewModel = _phoneService.GetPhoneById((int)phoneId);
+                return View(phoneViewModel);
+            }
+            catch (NullReferenceException)
+            {
+                return RedirectToAction("Error", "Errors", new {statusCode = 777});
+            }
         }
     }
 }

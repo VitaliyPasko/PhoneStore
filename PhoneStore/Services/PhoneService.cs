@@ -2,11 +2,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels;
+using PhoneStore.ViewModels.Feedback;
+using PhoneStore.ViewModels.PhoneViewModels;
 
 namespace PhoneStore.Services
 {
@@ -49,6 +52,37 @@ namespace PhoneStore.Services
                 
             _db.Phones.Add(entity.MapToPhone(imagePath));
             await _db.SaveChangesAsync();
+        }
+
+        public PhoneViewModel GetPhoneById(int phoneId)
+        {
+            var phone = _db.Phones
+                .Include(p => p.Brand)
+                .Include(p => p.Feedbacks)
+                .ThenInclude(f => f.User)
+                .FirstOrDefault(p => p.Id == phoneId);
+                
+            var phoneViewModel = new PhoneViewModel
+            {
+                Brand = phone.Brand,
+                Feedbacks = phone.Feedbacks.Select(f => new FeedbackViewModel
+                    {
+                        Id = f.Id,
+                        Phone = f.Phone.MapToPhoneViewModel(),
+                        Text = f.Text,
+                        User = f.User.MapToUserViewModel(),
+                        CreationDateTime = f.CreationDateTime,
+                        UserId = f.UserId,
+                        PhoneId = f.PhoneId
+                    })
+                    .OrderByDescending(f => f.CreationDateTime)
+                    .ToList(),
+                Image = phone.Image,
+                Name = phone.Name,
+                Price = phone.Price,
+                Id = phone.Id
+            };
+            return phoneViewModel;
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using PhoneStore.Models;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 
 namespace PhoneStore.Services
 {
@@ -16,15 +16,21 @@ namespace PhoneStore.Services
         }
 
         public IEnumerable<User> SearchByName(string searchTerm)
-            => _db.Users.Where(u => u.Name
+            => _db.Users
+                .Where(u => u.Name
                 .ToLower()
-                .Contains(searchTerm
-                    .ToLower()));
+                .Contains(searchTerm.ToLower()));
 
         public IEnumerable<User> SearchByLogin(string searchTerm)
-            => _db.Users.Where(u => u.UserName.ToLower().Contains(searchTerm.ToLower()));
+            => _db.Users
+                .Where(u => u.UserName
+                    .ToLower()
+                    .Contains(searchTerm.ToLower()));
 
         public IEnumerable<User> SearchByEmail(string searchTerm)
-            => _db.Users.Where(u => u.Email.ToLower().Contains(searchTerm.ToLower()));
+            => _db.Users
+                .Where(u => u.Email
+                    .ToLower()
+                    .Contains(searchTerm.ToLower()));
     }
 }

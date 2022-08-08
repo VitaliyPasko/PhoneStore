@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PhoneStore.Services.Abstractions
+namespace PhoneStore.Services.Interfaces
 {
     public interface IPaginationService<T>
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using PhoneStore.Enums;
 using PhoneStore.Models;
 
-namespace PhoneStore.Services.Abstractions
+namespace PhoneStore.Services.Interfaces
 {
     public interface IBasketService
     {

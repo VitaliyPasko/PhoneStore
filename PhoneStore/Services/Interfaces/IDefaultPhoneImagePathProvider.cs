@@ -1,4 +1,4 @@
-namespace PhoneStore.Services.Abstractions
+namespace PhoneStore.Services.Interfaces
 {
     public interface IDefaultPhoneImagePathProvider
     {

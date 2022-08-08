@@ -1,7 +1,9 @@
 using System;
-using PhoneStore.Models;
+using PhoneStore.ViewModels.Account;
+using PhoneStore.ViewModels.Account;
+using PhoneStore.ViewModels.PhoneViewModels;
 
-namespace PhoneStore.ViewModels
+namespace PhoneStore.ViewModels.Feedback
 {
     public class FeedbackViewModel
     {
@@ -10,7 +12,7 @@ namespace PhoneStore.ViewModels
         public int PhoneId { get; set; }
         public string Text { get; set; }
         public DateTime CreationDateTime { get; set; }
-        public User User { get; set; }
-        public Phone Phone { get; set; }
+        public UserViewModel User { get; set; }
+        public PhoneViewModel Phone { get; set; }
     }
 }

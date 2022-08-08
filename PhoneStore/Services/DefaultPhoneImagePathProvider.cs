@@ -1,4 +1,4 @@
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 
 namespace PhoneStore.Services
 {

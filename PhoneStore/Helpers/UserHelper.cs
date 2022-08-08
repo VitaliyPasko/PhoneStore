@@ -1,6 +1,7 @@
 using System.Linq;
 using PhoneStore.Models;
 using PhoneStore.ViewModels;
+using PhoneStore.ViewModels.Account;
 
 namespace PhoneStore.Helpers
 {
@@ -18,6 +19,19 @@ namespace PhoneStore.Helpers
                 Users = self.ToArray(),
                 Filter = filter,
                 PageViewModel = new PageViewModel(page, count, pageSize)
+            };
+        }
+        
+        public static UserViewModel MapToUserViewModel(
+            this User self)
+        {
+            return new UserViewModel
+            {
+                Age = self.Age,
+                Email = self.Email,
+                Id = self.Id,
+                Name = self.Name,
+                Username = self.UserName
             };
         }
     }

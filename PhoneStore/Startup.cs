@@ -9,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
 using PhoneStore.Services;
-using PhoneStore.Services.Abstractions;
 
 namespace PhoneStore
 {

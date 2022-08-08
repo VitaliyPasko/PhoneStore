@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using PhoneStore.Models;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 using Order = PhoneStore.Enums.Order;
 
 namespace PhoneStore.Services

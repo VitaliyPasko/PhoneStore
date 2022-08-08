@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 
 namespace PhoneStore.Services
 {

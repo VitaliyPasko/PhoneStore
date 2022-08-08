@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Enums;
 using PhoneStore.Models;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels.Account;
 using IdentityResult = PhoneStore.DataObjects.IdentityResult;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
@@ -82,7 +82,6 @@ namespace PhoneStore.Services
         public async Task LogOf() 
             => await _signInManager.SignOutAsync();
 
-        [HttpGet]
         public IEnumerable<User> SearchUsersByAnyTerm(string searchTerm)
         {
             var resultByName = _usersSearcher.SearchByName(searchTerm);

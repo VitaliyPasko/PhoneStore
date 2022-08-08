@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using PhoneStore.Models;
+using PhoneStore.ViewModels.Feedback;
 
-namespace PhoneStore.ViewModels
+namespace PhoneStore.ViewModels.PhoneViewModels
 {
     public class PhoneViewModel
     {

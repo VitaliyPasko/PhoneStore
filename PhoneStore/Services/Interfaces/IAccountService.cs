@@ -4,7 +4,7 @@ using PhoneStore.DataObjects;
 using PhoneStore.Models;
 using PhoneStore.ViewModels.Account;
 
-namespace PhoneStore.Services.Abstractions
+namespace PhoneStore.Services.Interfaces
 {
     public interface IAccountService
     {

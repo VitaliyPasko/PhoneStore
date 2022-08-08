@@ -1,6 +1,6 @@
 using System.Linq;
 using PhoneStore.Models;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 
 namespace PhoneStore.Services
 {

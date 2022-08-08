@@ -1,7 +1,7 @@
 using System.Linq;
 using PhoneStore.Models;
 
-namespace PhoneStore.Services.Abstractions
+namespace PhoneStore.Services.Interfaces
 {
     public interface IUsersFilter
     {

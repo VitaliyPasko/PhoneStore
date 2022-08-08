@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Enums;
 using PhoneStore.Helpers;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels.Account;
 
 namespace PhoneStore.Controllers

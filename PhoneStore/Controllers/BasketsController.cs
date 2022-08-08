@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Enums;
-using PhoneStore.Services.Abstractions;
+using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels;
 
 namespace PhoneStore.Controllers

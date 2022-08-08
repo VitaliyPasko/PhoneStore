@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Models;
 
-namespace PhoneStore.ViewModels
+namespace PhoneStore.ViewModels.PhoneViewModels
 {
     public class PhoneCreateViewModel
     {

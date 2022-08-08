@@ -1,5 +1,6 @@
 using PhoneStore.Models;
 using PhoneStore.ViewModels;
+using PhoneStore.ViewModels.PhoneViewModels;
 
 namespace PhoneStore.Helpers
 {
@@ -18,5 +19,19 @@ namespace PhoneStore.Helpers
 
             return phone;
         }
+        public static PhoneViewModel MapToPhoneViewModel(this Phone self, string imagePath = null)
+        {
+            PhoneViewModel phone = new PhoneViewModel
+            {
+                Name = self.Name,
+                Price = self.Price,
+                Brand = self.Brand,
+                Image = imagePath,
+                Id = self.Id
+            };
+
+            return phone;
+        }
+        
     }
 }

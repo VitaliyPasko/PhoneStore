@@ -1,0 +1,13 @@
+@model PhoneStore.ViewModels.Feedback.FeedbackViewModel
+
+<div class="card mb-3">
+    <h5 class="card-header">
+        @Model.User.Name
+    </h5>
+    <div class="card-body">
+        <h5 class="card-title">
+            Отзыв
+        </h5>
+        <div class="card-text">@Model.Text</div>
+    </div>
+</div>
