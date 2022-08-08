@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PhoneStore.Helpers;
@@ -22,14 +23,14 @@ namespace PhoneStore.Services
             _userManager = userManager;
         }
 
-        public FeedbackViewModel Create(FeedbackCreateViewModel model, int userId)
+        public FeedbackViewModel Create(FeedbackCreateViewModel model, ClaimsPrincipal user)
         {
             Feedback feedback = new Feedback
             {
                 CreationDateTime = DateTime.Now,
                 Text = model.Text,
                 PhoneId = model.PhoneId,
-                UserId = userId
+                UserId = int.Parse(_userManager.GetUserId(user))
             };
             _db.Feedbacks.Add(feedback);
             _db.SaveChanges();

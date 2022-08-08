@@ -23,8 +23,7 @@ namespace PhoneStore.Controllers
         public ActionResult<FeedbackViewModel> Create(FeedbackCreateViewModel model)
         {
             //TODO: валидация.
-            var userId = int.Parse(_userManager.GetUserId(User));
-            var feedbackViewModel = _feedbackService.Create(model, userId);
+            var feedbackViewModel = _feedbackService.Create(model, User);
             
             return Json(feedbackViewModel);
         }
