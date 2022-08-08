@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Enums;
 using PhoneStore.Helpers;
-using PhoneStore.Models;
 using PhoneStore.Services.Abstractions;
 using PhoneStore.ViewModels.Account;
 
@@ -73,6 +72,13 @@ namespace PhoneStore.Controllers
         {
             await _accountService.LogOf();
             return RedirectToAction("Index", "Phones");
+        }
+
+        [HttpGet]
+        public IActionResult SearchAccounts(string searchTerm)
+        {
+            var users = _accountService.SearchUsersByAnyTerm(searchTerm);
+            return PartialView("PartialViews/SearchResultPartial", users);
         }
     }
 }

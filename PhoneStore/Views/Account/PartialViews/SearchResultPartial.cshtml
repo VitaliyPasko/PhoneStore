@@ -1,0 +1,33 @@
+@model IEnumerable<User>
+
+@if (Model.Any())
+{
+    var i = 1;
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">UserName</th>
+            <th scope="col">Age</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <th scope="row" id="@user.Id">@(i++)</th>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.UserName</td>
+                <td>@user.Age</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Список пуст</p>
+}

@@ -27,6 +27,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Brands" asp-action="Create">Добавить бренд</a>
                     </li>
+                    <li class="nav-item">
+                        <input type="text" id="search" class="form-control" placeholder="Критерии для поиска">
+                    </li>
                 </ul>
             </div>
             <div class="login_group">
@@ -49,6 +52,7 @@
 </header>
 <div class="container">
     <main role="main" class="pb-3">
+        <div id="results"></div>
         @RenderBody()
     </main>
 </div>

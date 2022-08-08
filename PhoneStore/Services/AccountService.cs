@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Enums;
 using PhoneStore.Models;
 using PhoneStore.Services.Abstractions;
 using PhoneStore.ViewModels.Account;
 using IdentityResult = PhoneStore.DataObjects.IdentityResult;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace PhoneStore.Services
 {
@@ -14,13 +16,16 @@ namespace PhoneStore.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IUsersSearcher _usersSearcher;
 
         public AccountService(
             UserManager<User> userManager, 
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager, 
+            IUsersSearcher usersSearcher)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _usersSearcher = usersSearcher;
         }
 
         public async Task<IdentityResult> Register(RegisterViewModel model)
@@ -34,7 +39,9 @@ namespace PhoneStore.Services
             User user = new User
             {
                 Email = model.Email,
-                UserName = model.Email
+                UserName = model.Email,
+                Age = model.Age,
+                Name = model.Name
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -74,5 +81,19 @@ namespace PhoneStore.Services
 
         public async Task LogOf() 
             => await _signInManager.SignOutAsync();
+
+        [HttpGet]
+        public IEnumerable<User> SearchUsersByAnyTerm(string searchTerm)
+        {
+            var resultByName = _usersSearcher.SearchByName(searchTerm);
+            var resultByLogin = _usersSearcher.SearchByLogin(searchTerm);
+            var resultByEmail = _usersSearcher.SearchByEmail(searchTerm);
+            var users = resultByName
+                .Concat(resultByLogin)
+                .Concat(resultByEmail)
+                .ToHashSet();
+            
+            return users;
+        }
     }
 }
