@@ -8,26 +8,28 @@
 
 <h2>@Model.Name</h2>
 <div class="card mb-3">
-    <img class="card-img-top w-50" src="~/@Model.Image" alt="Card image cap">
-    <div class="card-body">
-        <h5 class="card-title">@Model.Brand.Name</h5>
-        <p class="card-text">@(Model.Price.ToString("C2"))</p>
-    </div>
-    @if (User.Identity.IsAuthenticated)
-    {
-        <form id="feedbackForm">
-            <div class="form-group">
-                <label for="text">Добавьте отзыв о телефоне</label>
-                <input type="text" class="form-control" id="text" placeholder="Минимальная длина отзыва 10 символов">
-                <input type="text" hidden name="phoneId" id="@Model.Id">
-                <button type="submit">Отправить</button>
+    <div class="container">
+        <img class="card-img-top w-50" src="~/@Model.Image" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Brand.Name</h5>
+                <p class="card-text">@(Model.Price.ToString("C2"))</p>
             </div>
-        </form>
-    }
-    else
-    {
-        <a asp-action="Login" asp-controller="Account">Авторизируйтесь для добавления отзыва</a>
-    }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form class="mb-3" id="feedbackForm">
+                    <div class="form-group">
+                        <label for="text">Добавьте отзыв о телефоне</label>
+                        <input type="text" class="form-control" id="text" placeholder="Минимальная длина отзыва 10 символов">
+                        <input type="text" hidden name="phoneId" id="@Model.Id">
+                        <button class="my-3" type="submit">Отправить</button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <a asp-action="Login" asp-controller="Account">Авторизируйтесь для добавления отзыва</a>
+            }
+    </div>
 </div>
 <div id="feedbacks">
     @foreach (var feedBack in Model.Feedbacks)
@@ -35,23 +37,3 @@
         await Html.RenderPartialAsync("PartialViews/FeedbackPartialView", feedBack);
     }
 </div>
-
-@section Scripts
-{
-    <script >
-    $(document).ready(function (){
-        $("#feedbackForm").on("submit", function (e){
-            e.preventDefault();
-            let phoneId = $("input[name=phoneId]");
-            let text = $("#text");
-            let feedback = {
-                text: text.val(),
-                phoneId: phoneId.attr('id')
-            };
-            $.post(`@Url.Action("Create", "Feedback")`, feedback, function (response){
-                $('#feedbacks').before(response);
-            })
-        })
-    })
-    </script>
-}
