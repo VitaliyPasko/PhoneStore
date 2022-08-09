@@ -1,7 +1,9 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Models;
 using PhoneStore.Services.Interfaces;
+using PhoneStore.Validations;
 using PhoneStore.ViewModels;
 using PhoneStore.ViewModels.Feedback;
 
@@ -11,17 +13,27 @@ namespace PhoneStore.Controllers
     {
         private readonly IFeedbackService _feedbackService;
         private readonly MobileContext _db;
+        private readonly FeedbackValidation _feedbackValidation;
 
-        public FeedbackController(IFeedbackService feedbackService, MobileContext db)
+        public FeedbackController(
+            IFeedbackService feedbackService, 
+            MobileContext db, 
+            FeedbackValidation feedbackValidation)
         {
             _feedbackService = feedbackService;
             _db = db;
+            _feedbackValidation = feedbackValidation;
         }
 
         [HttpPost]
-        public IActionResult Create(FeedbackCreateViewModel model)
+        public async Task<IActionResult> Create(FeedbackCreateViewModel model)
         {
-            //TODO: валидация.
+            var validationResult = await _feedbackValidation.ValidateAsync(model);
+            if (!validationResult.IsValid)
+            {
+                //TODO: сформировать сообщение 
+                return NotFound();
+            }
             var feedbackViewModel = _feedbackService.Create(model, User);
             return PartialView("PartialViews/FeedbackPartialView", feedbackViewModel);
         }

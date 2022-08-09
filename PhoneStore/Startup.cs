@@ -29,6 +29,7 @@ namespace PhoneStore
                 .AddEntityFrameworkStores<MobileContext>();
             services.AddControllersWithViews();
             services.AddApplicationServices(Configuration);
+            services.AddValidationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
