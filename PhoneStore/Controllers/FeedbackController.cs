@@ -29,11 +29,11 @@ namespace PhoneStore.Controllers
         public async Task<IActionResult> Create(FeedbackCreateViewModel model)
         {
             var validationResult = await _feedbackValidation.ValidateAsync(model);
-            if (!validationResult.IsValid)
-            {
-                //TODO: сформировать сообщение 
-                return NotFound();
-            }
+            // if (!validationResult.IsValid)
+            // {
+            //     //TODO: сформировать сообщение 
+            //     return NotFound();
+            // }
             var feedbackViewModel = _feedbackService.Create(model, User);
             return PartialView("PartialViews/FeedbackPartialView", feedbackViewModel);
         }
@@ -49,6 +49,15 @@ namespace PhoneStore.Controllers
                 Feedback = new FeedbackAccountingViewModel(nameof(Feedback), feedbacksCount)
             };
             return Json(model);
+        }
+
+        [HttpPost]
+        public IActionResult Update([FromBody]FeedbackEditViewModel model)
+        {
+            var feedbackViewModel = _feedbackService.Update(model);
+            if (feedbackViewModel is null)
+                return RedirectToAction("Error", "Errors", new {statusCode = 777});
+            return PartialView("PartialViews/FeedbackPartialView", feedbackViewModel);
         }
     }
 }

@@ -6,5 +6,6 @@ namespace PhoneStore.Services.Interfaces
     public interface IFeedbackService
     {
         FeedbackViewModel Create(FeedbackCreateViewModel model, ClaimsPrincipal user);
+        FeedbackViewModel Update(FeedbackEditViewModel model);
     }
 }

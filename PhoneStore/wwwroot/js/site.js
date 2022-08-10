@@ -36,6 +36,8 @@ $(document).ready(function () {
         e.preventDefault();
         let phoneId = $("input[name=phoneId]");
         let text = $("#text");
+        console.log(text.val())
+        console.log(phoneId.attr('id'))
         let feedback = {
             text: text.val(),
             phoneId: phoneId.attr('id')

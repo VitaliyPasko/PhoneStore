@@ -42,5 +42,19 @@ namespace PhoneStore.Services
             
             return feedbackViewModel;
         }
+
+        public FeedbackViewModel Update(FeedbackEditViewModel model)
+        {
+            var feedback = _db.Feedbacks
+                .Include(f => f.User)
+                .Include(f => f.Phone)
+                .FirstOrDefault(f => f.Id == model.Id);
+            if (feedback is null)
+                return null;
+            feedback.Text = model.Text;
+            _db.Update(feedback);
+            _db.SaveChanges();
+            return feedback.MapToFeedbackViewModel();
+        }
     }
 }

@@ -8,25 +8,25 @@
 <div class="card mb-3">
     <div class="container">
         <img class="card-img-top w-50" src="~/@Model.Image" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">@Model.Brand.Name</h5>
-                <p class="card-text">@(Model.Price.ToString("C2"))</p>
-            </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <form class="mb-3" id="feedbackForm">
-                    <div class="form-group">
-                        <label for="text">Добавьте отзыв о телефоне</label>
-                        <input type="text" class="form-control" id="text" placeholder="Минимальная длина отзыва 10 символов">
-                        <input type="text" hidden name="phoneId" id="@Model.Id">
-                        <button class="my-3 btn btn-outline-warning" type="submit">Отправить</button>
-                    </div>
-                </form>
-            }
-            else
-            {
-                <a asp-action="Login" asp-controller="Account">Авторизируйтесь для добавления отзыва</a>
-            }
+        <div class="card-body">
+            <h5 class="card-title">@Model.Brand.Name</h5>
+            <p class="card-text">@(Model.Price.ToString("C2"))</p>
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form class="mb-3" id="feedbackForm">
+                <div class="form-group">
+                    <label for="text">Добавьте отзыв о телефоне</label>
+                    <input type="text" class="form-control" id="text" placeholder="Минимальная длина отзыва 10 символов">
+                    <input type="text" hidden name="phoneId" id="@Model.Id">
+                    <button class="my-3 btn btn-outline-warning" type="submit">Отправить</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <a asp-action="Login" asp-controller="Account">Авторизируйтесь для добавления отзыва</a>
+        }
     </div>
 </div>
 <div id="feedbacks">
@@ -35,3 +35,40 @@
         await Html.RenderPartialAsync("PartialViews/FeedbackPartialView", feedBack);
     }
 </div>
+@{
+    await Html.RenderPartialAsync("PartialViews/EditFeedbackModalPartial");
+}
+
+@section Scripts
+{
+    <script >
+        $('#exampleModal').on('show.bs.modal', function (event) {
+          const button = $(event.relatedTarget);
+          const oldText = button.attr('text');
+          const username = button.attr('username');
+          const feedbackId = button.attr('feedbackId');
+          const modal = $(this);
+          modal.find('.modal-title').text('Редактируете от имени: ' + username);
+          const textarea = modal.find('.modal-body textarea');
+          textarea.text(oldText);
+          console.log(textarea.text())
+          console.log(feedbackId)
+          $('#feedback-edit-form').on('submit', function (submitEvent){
+              submitEvent.preventDefault();
+              $('#exampleModal').modal('hide');
+              fetch('https://localhost:5001/feedback/update', {
+                  method: 'post',
+                  body: JSON.stringify({id: feedbackId, text: textarea.val()}),
+                  headers: {'content-type': 'application/json'}
+              }).then(response => {
+                  console.log(response);
+                  return response.text();
+              }).then(text => {
+                  $(`div[id=${feedbackId}]`).html(text);
+              }).catch((error) => {
+                  alert(error);
+              });
+          });
+        });
+    </script>
+}
