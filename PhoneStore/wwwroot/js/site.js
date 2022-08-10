@@ -49,5 +49,32 @@ $(document).ready(function () {
             return true;
         });
     });
+    
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const oldText = button.attr('text');
+        const username = button.attr('username');
+        const feedbackId = button.attr('feedbackId');
+        const modal = $(this);
+        modal.find('.modal-title').text('Редактируете от имени: ' + username);
+        const textarea = modal.find('.modal-body textarea');
+        textarea.text(oldText);
+        $('#feedback-edit-form').on('submit', function (submitEvent){
+            submitEvent.preventDefault();
+            $('#exampleModal').modal('hide');
+            fetch('https://localhost:5001/feedback/update', {
+                method: 'post',
+                body: JSON.stringify({id: feedbackId, text: textarea.val()}),
+                headers: {'content-type': 'application/json'}
+            }).then(response => {
+                console.log(response);
+                return response.text();
+            }).then(text => {
+                $(`div[id=${feedbackId}]`).html(text);
+            }).catch((error) => {
+                alert(error);
+            });
+        });
+    });
 });
 

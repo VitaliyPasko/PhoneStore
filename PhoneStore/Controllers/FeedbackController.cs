@@ -28,10 +28,11 @@ namespace PhoneStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(FeedbackCreateViewModel model)
         {
+           
             var validationResult = await _feedbackValidation.ValidateAsync(model);
             // if (!validationResult.IsValid)
             // {
-            //     //TODO: сформировать сообщение 
+            //TODO: сформировать сообщение 
             //     return NotFound();
             // }
             var feedbackViewModel = _feedbackService.Create(model, User);
