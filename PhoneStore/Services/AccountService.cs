@@ -63,15 +63,17 @@ namespace PhoneStore.Services
         public async Task<IdentityResult> LogIn(LoginViewModel model)
         {
             User user = await _userManager.FindByEmailAsync(model.Email);
-            SignInResult result = await _signInManager.PasswordSignInAsync(
-                user,
-                model.Password,
-                model.RememberMe,
-                false
-            );
-            if (result.Succeeded)
-                return new IdentityResult {StatusCodes = StatusCodes.Success};
-            
+            if (user is not null)
+            {
+                SignInResult result = await _signInManager.PasswordSignInAsync(
+                    user,
+                    model.Password,
+                    model.RememberMe,
+                    false
+                );
+                if (result.Succeeded)
+                    return new IdentityResult {StatusCodes = StatusCodes.Success};
+            }
             return new IdentityResult
             {
                 StatusCodes = StatusCodes.Error,
