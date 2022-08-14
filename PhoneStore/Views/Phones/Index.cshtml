@@ -33,7 +33,7 @@ else
         @foreach (var phone in Model.Phones)
         {
             <tr>
-                <td><img class="phone_img" src="@phone.Image" alt="картинка паламатая"/></td>
+                <td class="w_15 pr-2"><img class="phone_img w-100" src="@phone.Image" alt="картинка паламатая"/></td>
                 <td>@phone.Name</td>
                 <td>@phone.Brand.Name</td>
                 <td>@phone.Price</td>

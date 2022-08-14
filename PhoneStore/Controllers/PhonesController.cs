@@ -96,10 +96,9 @@ namespace PhoneStore.Controllers
             //TODO: Добавить удаление файла изображения.
             var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
             if (phone is null)
-                return BadRequest();
+                return RedirectToAction("Error", "Errors", new {statusCode = 777});
             _db.Phones.Remove(phone);
             _db.SaveChanges();
-            
             return RedirectToAction("Index");
         }
 
