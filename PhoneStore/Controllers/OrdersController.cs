@@ -1,49 +1,54 @@
-using System.Linq;
+
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using PhoneStore.Mappers;
 using PhoneStore.Models;
+using PhoneStore.Services.Interfaces;
+using PhoneStore.ViewModels;
 
 namespace PhoneStore.Controllers
 {
     public class OrdersController : Controller
     {
-        private readonly MobileContext _db;
-
-        public OrdersController(MobileContext db)
+        private readonly IOrderService _orderService;
+        private readonly IPhoneService _phoneService;
+        private readonly UserManager<User> _userManager;
+        public OrdersController(IOrderService orderService, IPhoneService phoneService, UserManager<User> userManager)
         {
-            _db = db;
+            _orderService = orderService;
+            _phoneService = phoneService;
+            _userManager = userManager;
         }
 
-        // GET
+        [HttpGet]
         public IActionResult Index()
         {
-            var orders = _db.Orders
-                .Include(p => p.Phone)
-                .ToList();
-            
+            var orders = _orderService.GetAll();
             return View(orders);
         }
         
         [HttpGet]
-        public IActionResult Create(int phoneId)
+        public async Task<IActionResult> Create(int phoneId)
         {
-            var phone = _db.Phones.FirstOrDefault(p => p.Id == phoneId);
+            User user = await _userManager.GetUserAsync(User);
+            var phone = _phoneService.GetById(phoneId);
             if (phone is null)
                 return RedirectToAction("Error", "Errors", new {statusCode = 777});
-            Order order = new Order
+            OrderViewModel order = new OrderViewModel
             {
-                Phone = phone
+                Phone = phone,
+                User = user.MapToUserViewModel()
             };
             
             return View(order);
         }
         
         [HttpPost]
-        public IActionResult Create(Order order)
+        public IActionResult Create(OrderViewModel order)
         {
-            _db.Orders.Add(order);
-            _db.SaveChanges();
-            
+            order.UserId = int.Parse(_userManager.GetUserId(User));
+            _orderService.Create(order.MapToOrderViewModel());
             return RedirectToAction("Index");
         }
     }

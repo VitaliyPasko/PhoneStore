@@ -4,7 +4,7 @@ using PhoneStore.Models;
 
 namespace PhoneStore.Services
 {
-    public class AdminInitializerService
+    public static class AdminInitializerService
     {
         public static async Task SeedAdminUser(
             RoleManager<Role> roleManager,

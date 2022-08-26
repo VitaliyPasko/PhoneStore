@@ -13,6 +13,7 @@ namespace PhoneStore.Models
 
         public MobileContext(DbContextOptions<MobileContext> options) : base(options)
         {
+            
         }
     }
 }

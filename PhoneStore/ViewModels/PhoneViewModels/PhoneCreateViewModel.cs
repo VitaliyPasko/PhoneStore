@@ -6,9 +6,8 @@ using PhoneStore.Models;
 
 namespace PhoneStore.ViewModels.PhoneViewModels
 {
-    public class PhoneCreateViewModel
+    public class PhoneCreateViewModel : BaseEntity
     {
-        public int Id { get; set; }
         [Required(ErrorMessage = "Поле обязательно для заполнения")]
         [Remote("CheckName", "PhoneValidator", ErrorMessage = "Имя занято")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Минимальная длина 3 символа, максимальная - 50")]

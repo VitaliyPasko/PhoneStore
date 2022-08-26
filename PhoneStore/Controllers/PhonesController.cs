@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhoneStore.Helpers;
+using PhoneStore.Mappers;
 using PhoneStore.Models;
 using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels;
@@ -143,7 +144,7 @@ namespace PhoneStore.Controllers
             try
             {
                 if (!phoneId.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
-                var phoneViewModel = _phoneService.GetPhoneById((int)phoneId);
+                var phoneViewModel = _phoneService.GetById(phoneId.Value);
                 return View(phoneViewModel);
             }
             catch (NullReferenceException)

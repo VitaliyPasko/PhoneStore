@@ -8,7 +8,7 @@ namespace PhoneStore.Helpers
 {
     public static class ServiceConnector
     {
-        public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IBasketService, BasketService>();
             services.AddTransient<UploadService>();
@@ -24,6 +24,9 @@ namespace PhoneStore.Helpers
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUsersSearcher, UsersSearcher>();
             services.AddTransient<IFeedbackService, FeedbackService>();
+            services.AddTransient<IPhoneService, PhoneService>();
+            services.AddTransient<IOrderService, OrderService>();
+            return services;
         }
     }
 }

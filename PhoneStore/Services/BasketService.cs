@@ -31,6 +31,7 @@ namespace PhoneStore.Services
         {
             return _context.Baskets
                 .Include(b => b.Phone)
+                .ThenInclude(p => p.Brand)
                 .ToList();
         }
 

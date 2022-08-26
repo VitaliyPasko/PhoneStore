@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using PhoneStore.Helpers;
+using PhoneStore.Mappers;
 using PhoneStore.Models;
+using PhoneStore.Repositories.Interfaces;
 using PhoneStore.Services.Interfaces;
-using PhoneStore.ViewModels;
 using PhoneStore.ViewModels.Feedback;
 using PhoneStore.ViewModels.PhoneViewModels;
 
@@ -19,6 +19,7 @@ namespace PhoneStore.Services
         private readonly IDefaultPhoneImagePathProvider _imagePathProvider;
         private readonly UploadService _uploadService;
         private readonly IHostEnvironment _environment;
+        private readonly IPhoneRepository _phoneRepository;
 
 
 
@@ -26,12 +27,13 @@ namespace PhoneStore.Services
             MobileContext db, 
             IDefaultPhoneImagePathProvider imagePathProvider, 
             UploadService uploadService, 
-            IHostEnvironment environment)
+            IHostEnvironment environment, IPhoneRepository phoneRepository)
         {
             _db = db;
             _imagePathProvider = imagePathProvider;
             _uploadService = uploadService;
             _environment = environment;
+            _phoneRepository = phoneRepository;
         }
 
         public async Task CreateAsync(PhoneCreateViewModel entity)
@@ -52,6 +54,13 @@ namespace PhoneStore.Services
                 
             _db.Phones.Add(entity.MapToPhone(imagePath));
             await _db.SaveChangesAsync();
+        }
+
+        public PhoneViewModel GetById(int phoneId)
+        {
+            return _phoneRepository
+                .GetById(phoneId)
+                .MapToPhoneViewModel();
         }
 
         public PhoneViewModel GetPhoneById(int phoneId)

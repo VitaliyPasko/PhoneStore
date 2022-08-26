@@ -1,10 +1,9 @@
 using System;
-using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using PhoneStore.Helpers;
+using PhoneStore.Mappers;
 using PhoneStore.Models;
+using PhoneStore.Repositories.Interfaces;
 using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels.Feedback;
 
@@ -12,19 +11,23 @@ namespace PhoneStore.Services
 {
     public class FeedbackService : IFeedbackService
     {
-        private readonly MobileContext _db;
         private readonly UserManager<User> _userManager;
+        private readonly IFeedbackRepository _feedbackRepository;
 
         public FeedbackService(
-            MobileContext db, 
-            UserManager<User> userManager)
+            UserManager<User> userManager, 
+            IFeedbackRepository feedbackRepository)
         {
-            _db = db;
             _userManager = userManager;
+            _feedbackRepository = feedbackRepository;
         }
 
         public FeedbackViewModel Create(FeedbackCreateViewModel model, ClaimsPrincipal user)
         {
+            var userId = int.Parse(_userManager.GetUserId(user));
+            var exist = _feedbackRepository.CheckFeedbackExists(userId, model.PhoneId);
+            if (exist)
+                return null;
             Feedback feedback = new Feedback
             {
                 CreationDateTime = DateTime.Now,
@@ -32,29 +35,29 @@ namespace PhoneStore.Services
                 PhoneId = model.PhoneId,
                 UserId = int.Parse(_userManager.GetUserId(user))
             };
-            _db.Feedbacks.Add(feedback);
-            _db.SaveChanges();
-            Feedback newFeedback = _db.Feedbacks
-                .Include(f => f.User)
-                .Include(f => f.Phone)
-                .First(f => f.Id == feedback.Id);
-            FeedbackViewModel feedbackViewModel = newFeedback.MapToFeedbackViewModel();
+            _feedbackRepository.Create(feedback);
+            FeedbackViewModel feedbackViewModel = _feedbackRepository
+                .GetById(feedback.Id)
+                .MapToFeedbackViewModel();
             
             return feedbackViewModel;
         }
 
         public FeedbackViewModel Update(FeedbackEditViewModel model)
         {
-            var feedback = _db.Feedbacks
-                .Include(f => f.User)
-                .Include(f => f.Phone)
-                .FirstOrDefault(f => f.Id == model.Id);
+            var feedback = _feedbackRepository.GetById(model.Id);
             if (feedback is null)
                 return null;
             feedback.Text = model.Text;
-            _db.Update(feedback);
-            _db.SaveChanges();
+            _feedbackRepository.Update(feedback);
             return feedback.MapToFeedbackViewModel();
+        }
+
+        public FeedbackViewModel GetById(int id)
+        {
+            return _feedbackRepository
+                .GetById(id)
+                .MapToFeedbackViewModel();
         }
     }
 }

@@ -3,9 +3,9 @@ using PhoneStore.Models;
 using PhoneStore.ViewModels;
 using PhoneStore.ViewModels.Account;
 
-namespace PhoneStore.Helpers
+namespace PhoneStore.Mappers
 {
-    public static class UserHelper
+    public static class UserMapper
     {
         public static UsersViewModel MapToUsersViewModel(
             this IQueryable<User> self, 
@@ -22,8 +22,7 @@ namespace PhoneStore.Helpers
             };
         }
         
-        public static UserViewModel MapToUserViewModel(
-            this User self)
+        public static UserViewModel MapToUserViewModel(this User self)
         {
             return new UserViewModel
             {
@@ -32,6 +31,17 @@ namespace PhoneStore.Helpers
                 Id = self.Id,
                 Name = self.Name,
                 Username = self.UserName
+            };
+        }
+        
+        public static User MapToUser(this UserViewModel self)
+        {
+            return new User
+            {
+                Age = self.Age,
+                Email = self.Email,
+                Id = self.Id,
+                Name = self.Name
             };
         }
     }

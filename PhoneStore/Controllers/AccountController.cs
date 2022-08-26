@@ -1,8 +1,11 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Enums;
 using PhoneStore.Helpers;
+using PhoneStore.Models;
 using PhoneStore.Services.Interfaces;
 using PhoneStore.ViewModels.Account;
 
@@ -11,10 +14,13 @@ namespace PhoneStore.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly UserManager<User> _userManager;
 
-        public AccountController(IAccountService accountService)
+
+        public AccountController(IAccountService accountService, UserManager<User> userManager)
         {
             _accountService = accountService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -79,6 +85,13 @@ namespace PhoneStore.Controllers
         {
             var users = _accountService.SearchUsersByAnyTerm(searchTerm);
             return PartialView("PartialViews/SearchResultPartial", users);
+        }
+
+        [HttpGet]
+        public async Task<OkObjectResult> GetAuthUser()
+        {
+            User user = await _userManager.GetUserAsync(User);
+            return Ok(user ?? new User());
         }
     }
 }

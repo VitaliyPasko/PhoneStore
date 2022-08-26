@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using PhoneStore.Models;
 using PhoneStore.ViewModels.Feedback;
 
 namespace PhoneStore.Services.Interfaces
@@ -7,5 +8,6 @@ namespace PhoneStore.Services.Interfaces
     {
         FeedbackViewModel Create(FeedbackCreateViewModel model, ClaimsPrincipal user);
         FeedbackViewModel Update(FeedbackEditViewModel model);
+        FeedbackViewModel GetById(int id);
     }
 }

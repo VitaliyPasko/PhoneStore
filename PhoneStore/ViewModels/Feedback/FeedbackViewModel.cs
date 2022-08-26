@@ -4,9 +4,8 @@ using PhoneStore.ViewModels.PhoneViewModels;
 
 namespace PhoneStore.ViewModels.Feedback
 {
-    public class FeedbackViewModel
+    public class FeedbackViewModel : BaseEntity
     {
-        public int Id { get; set; }
         public int UserId { get; set; }
         public int PhoneId { get; set; }
         public string Text { get; set; }
