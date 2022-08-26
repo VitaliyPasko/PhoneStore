@@ -28,7 +28,7 @@ namespace PhoneStore.Mappers
                 Brand = self.Brand,
                 Image = self.Image,
                 Id = self.Id,
-                Feedbacks = self.Feedbacks.Select(f => f.MapToFeedbackViewModel()),
+                Feedbacks = self.Feedbacks?.Select(f => f.MapToFeedbackViewModel()),
                 BrandId = self.BrandId
             };
 

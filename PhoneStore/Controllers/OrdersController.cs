@@ -1,4 +1,5 @@
 
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -48,8 +49,15 @@ namespace PhoneStore.Controllers
         public IActionResult Create(OrderViewModel order)
         {
             order.UserId = int.Parse(_userManager.GetUserId(User));
-            _orderService.Create(order.MapToOrderViewModel());
+            _orderService.Create(order.MapToOrder());
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult GetAllByUserId(int id)
+        {
+            var model = _orderService.GetByUserId(id).ToArray();
+            return Json(model);
         }
     }
 }

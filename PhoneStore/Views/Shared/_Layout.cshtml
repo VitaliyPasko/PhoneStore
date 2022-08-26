@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> _userManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -35,7 +37,10 @@
             <div class="login_group">
                 @if(User.Identity.IsAuthenticated)
                 {
-                    <p>@User.Identity.Name</p>
+                    <a 
+                        asp-action="Index" 
+                        asp-controller="PersonalArea" 
+                        asp-route-userId="@_userManager.GetUserId(User)">@User.Identity.Name</a>
                            
                     <form method="post" asp-controller="Account" asp-action="LogOff">
                         <button class="btn btn-outline-warning" type="submit">Выход</button>

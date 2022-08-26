@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
 
@@ -21,16 +22,17 @@ namespace PhoneStore
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MobileContext>(options => options.UseNpgsql(connection))
-                .AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<MobileContext>();
-            services.AddControllersWithViews();
+            
+            services.AddControllersWithViews().AddNewtonsoftJson(o => 
+                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             //Можно так подключать сервисы
             services.AddApplicationServices(Configuration);
             //А можно так
             RepositoryConnector.AddRepositories(services);
             services.AddValidationServices();
-            services.AddCors();
+            services.AddDbContext<MobileContext>(options => options.UseNpgsql(connection))
+                .AddIdentity<User, Role>()
+                .AddEntityFrameworkStores<MobileContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +53,6 @@ namespace PhoneStore
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

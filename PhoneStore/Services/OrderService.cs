@@ -21,7 +21,9 @@ namespace PhoneStore.Services
             => _orderRepository.GetAll().Select(o => o.MapToOrderViewModel());
         
         public void Create(Order order)
-            => _orderRepository.Create(order);
+        {
+            _orderRepository.Create(order);
+        }
         
         public OrderViewModel GetById(int id)
             => _orderRepository.GetById(id).MapToOrderViewModel();

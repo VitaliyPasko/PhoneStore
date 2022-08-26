@@ -31,6 +31,7 @@ namespace PhoneStore.Repositories
             var a =_db.Phones
             .Include(p => p.Brand)
             .Include(p => p.Feedbacks)
+            .ThenInclude(f => f.User)
             .FirstOrDefault(p => p.Id == id);
             return a;
         }

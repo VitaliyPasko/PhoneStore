@@ -1,4 +1,8 @@
+@using PhoneStore.Repositories.Interfaces
+@using Microsoft.AspNetCore.Identity
 @model PhoneStore.ViewModels.PhoneViewModels.PhoneViewModel
+@inject IFeedbackRepository _feedbackRepository;
+@inject UserManager<User> _userManager;
 @{
     ViewBag.Title = "Подробная информация";
     Layout = "_Layout";
@@ -14,16 +18,19 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            <form class="mb-3" id="feedbackForm">
-                <div class="form-group">
-                    <label for="text">Добавьте отзыв о телефоне</label>
-                    <input type="text" class="form-control" id="text" placeholder="Минимальная длина отзыва 10 символов">
-                    <input type="text" hidden name="phoneId" id="@Model.Id">
-                    <button class="my-3 btn btn-outline-warning" type="submit">Отправить</button>
-                </div>
-            </form>
+            if (!_feedbackRepository.CheckFeedbackExists(int.Parse(_userManager.GetUserId(User)), Model.Id))
+            {
+                <form class="mb-3" id="feedbackForm">
+                    <div class="form-group">
+                        <label for="text">Добавьте отзыв о телефоне</label>
+                        <input type="text" class="form-control" id="text" placeholder="Минимальная длина отзыва 10 символов">
+                        <input type="text" hidden name="phoneId" id="@Model.Id">
+                        <button class="my-3 btn btn-outline-warning" type="submit">Отправить</button>
+                    </div>
+                </form>
+            }
         }
-        else
+        else if(!User.Identity.IsAuthenticated)
         {
             <a asp-action="Login" asp-controller="Account">Авторизируйтесь для добавления отзыва</a>
         }

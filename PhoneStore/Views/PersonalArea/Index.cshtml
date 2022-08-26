@@ -1,0 +1,93 @@
+﻿@model PersonalAreaViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2 userId="@Model.User.Id" >Кабинет @Model.User.Username</h2>
+
+<div class="tabs">
+    <div class="tab-items row w-50 m-auto">
+        <a href="#tab-feedbaks" class="active tab-pane col-md-6">Все отзывы @Model.User.Username</a>
+        <a href="#tab-orders" class="tab-pane col-md-6">Все заказы @Model.User.Username</a>
+    </div>
+    <div class="tab-contents">
+        <div id="tab-feedbaks" class="tab-content">
+            @foreach (var feedback in Model.Feedbacks)
+            {
+                await Html.RenderPartialAsync("PartialViews/FeedbackPartialView", feedback);
+            }
+        </div>
+        <div id="tab-orders" class="tab-content">
+            <table style="width: 100%">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Адрес</th>
+                        <th>Контактный телефон</th>
+                        <th>Имя пользователя</th>
+                        <th>Название телефона</th>
+                    </tr>
+                </thead>
+                <tbody id="orders">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script >
+        
+        $('.tab-pane').click(function (e){
+            e.preventDefault();
+            let userId = $('h2').attr('userId');
+            fetch("https://localhost:5001/Orders/GetAllByUserId/" + userId)
+            .then((response) => {
+                return  response.json();
+            })
+            .then((orders) => {
+                if (orders.length === 0){
+                    $(this).html('<h3>Заказов нет</h3>');
+                }
+                else{
+                    let content;
+                    $.each(orders, (order) => {
+                        content += `<tr>
+                                           <td>order.id</td>
+                                           <td>order.address</td>
+                                           <td>order.contactPhone</td>
+                                           <td>order.user.Name</td>
+                                           <td>order.phone.Name</td>
+                                       </tr>`
+                       
+                    });
+                    $('#orders').html(content);
+                }
+            });
+        });
+        
+        let makeTabs = function (){
+            let tabs = $(".tabs").find(".tab-items a");
+            $.each(tabs,  function (index, item){
+                if ($(item).hasClass('active')){
+                    let activeTabContent = $(this).attr('href');
+                    $(this).parents('.tabs').find(activeTabContent).show();
+                }
+            });
+            $(tabs).click(function (e){
+                e.preventDefault();
+                if (!$(this).hasClass('active')){
+                    let tabContent = $(this).attr('href');
+                    $(this).siblings('.tab-items a').removeClass('active');
+                    $(this).addClass('active');
+                    $(this).closest('.tabs').find('.tab-content').hide();
+                    $(this).closest('.tabs').find(tabContent).show();
+                }
+            });
+        };
+        makeTabs();
+    </script>
+}
