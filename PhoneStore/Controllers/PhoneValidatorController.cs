@@ -15,8 +15,15 @@ namespace PhoneStore.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public bool CheckName(string name)
+        public bool CheckName(string name, int? id)
         {
+            if (id.HasValue)
+            {
+                return !_db.Phones
+                    .AsEnumerable()
+                    .Any(p => p.Name.Equals(name, StringComparison.CurrentCulture) && p.Id != id.Value);
+            }
+            
             return !_db.Phones
                 .AsEnumerable()
                 .Any(p => p.Name.Equals(name, StringComparison.CurrentCulture));

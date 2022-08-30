@@ -50,7 +50,7 @@ namespace PhoneStore.Controllers
         {
             order.UserId = int.Parse(_userManager.GetUserId(User));
             order.User = null;
-            _orderService.Create(order.MapToOrderViewModel());
+            _orderService.Create(order.MapToOrder());
             return RedirectToAction("Index");
         }
 

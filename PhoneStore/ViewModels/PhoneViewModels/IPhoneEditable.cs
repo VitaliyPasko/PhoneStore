@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,10 +6,11 @@ using PhoneStore.Models;
 
 namespace PhoneStore.ViewModels.PhoneViewModels
 {
-    public class PhoneCreateViewModel : BaseEntity, IPhoneEditable
+    public interface IPhoneEditable
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Поле обязательно для заполнения")]
-        [Remote("CheckName", "PhoneValidator", ErrorMessage = "Имя занято")]
+        [Remote("CheckName", "PhoneValidator", ErrorMessage = "Имя занято", AdditionalFields = nameof(Id))]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Минимальная длина 3 символа, максимальная - 50")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Поле обязательно для заполнения")]

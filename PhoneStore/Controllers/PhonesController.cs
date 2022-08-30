@@ -47,7 +47,7 @@ namespace PhoneStore.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            PhoneCreateViewModel model = new PhoneCreateViewModel
+            IPhoneEditable model = new PhoneCreateViewModel
             {
                 Brands = _db.Brands.ToList()
             };
@@ -111,7 +111,7 @@ namespace PhoneStore.Controllers
             if (phone is null)
                 return RedirectToAction("Error", "Errors", new {statusCode = 777});
             
-            PhoneCreateViewModel model = new PhoneCreateViewModel
+            IPhoneEditable model = new PhoneEditViewModel
             {
                 Id = phone.Id,
                 Name = phone.Name,
