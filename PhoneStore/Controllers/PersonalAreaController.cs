@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using PhoneStore.Services.Interfaces;
 
 namespace PhoneStore.Controllers

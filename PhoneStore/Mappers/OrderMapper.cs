@@ -19,7 +19,7 @@ namespace PhoneStore.Mappers
             };
         }
         
-        public static Order MapToOrderViewModel(this OrderViewModel self)
+        public static Order MapToOrder(this OrderViewModel self)
         {
             return new Order
             {
@@ -27,7 +27,6 @@ namespace PhoneStore.Mappers
                 Phone = self.Phone?.MapToPhone(),
                 ContactPhone = self.ContactPhone,
                 PhoneId = self.PhoneId,
-                User = self.User?.MapToUser(),
                 UserId = self.UserId,
                 Id = self.Id
             };

@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject UserManager<User> UserManager
+@inject UserManager<User> _userManager
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +37,10 @@
             <div class="login_group">
                 @if(User.Identity.IsAuthenticated)
                 {
-                    <a asp-action="Index" asp-controller="PersonalArea" asp-route-userId="@UserManager.GetUserId(User)">@User.Identity.Name</a>
+                    <a 
+                        asp-action="Index" 
+                        asp-controller="PersonalArea" 
+                        asp-route-userId="@_userManager.GetUserId(User)">@User.Identity.Name</a>
                            
                     <form method="post" asp-controller="Account" asp-action="LogOff">
                         <button class="btn btn-outline-warning" type="submit">Выход</button>

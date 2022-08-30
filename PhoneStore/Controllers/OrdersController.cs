@@ -1,4 +1,5 @@
 
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -53,9 +54,10 @@ namespace PhoneStore.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public IActionResult GetAllByUserId(int id)
         {
-            var model = _orderService.GetByUserId(id);
+            var model = _orderService.GetByUserId(id).ToArray();
             return Json(model);
         }
     }

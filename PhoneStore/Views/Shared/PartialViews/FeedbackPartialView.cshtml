@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Identity
 @model PhoneStore.ViewModels.Feedback.FeedbackViewModel
-@inject UserManager<User> _userManager;
+@inject UserManager<User> UserManager;
 
 <div id="@Model.Id" class="card mb-3">
     <h5 class="card-header">
@@ -13,7 +13,7 @@
         <div class="card-text">@Model.Text</div>
         @if (User.Identity.IsAuthenticated)
         {
-            if (int.Parse(_userManager.GetUserId(User)) == Model.UserId)
+            if (int.Parse(UserManager.GetUserId(User)) == Model.UserId)
             {
                 <button type="button"
                         class="btn btn-outline-warning"
@@ -27,6 +27,5 @@
                 </button>
             }
         }
-
     </div>
 </div>
