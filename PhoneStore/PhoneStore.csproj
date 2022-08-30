@@ -20,8 +20,4 @@
       <_ContentIncludedByDefault Remove="wwwroot\Files\book.pdf" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Pages" />
-    </ItemGroup>
-
 </Project>

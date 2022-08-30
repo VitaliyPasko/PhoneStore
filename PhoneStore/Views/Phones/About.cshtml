@@ -1,8 +1,8 @@
 @using PhoneStore.Repositories.Interfaces
 @using Microsoft.AspNetCore.Identity
-@model PhoneStore.ViewModels.PhoneViewModels.PhoneViewModel
-@inject IFeedbackRepository _feedbackRepository;
-@inject UserManager<User> _userManager;
+@model PhoneViewModel
+@inject IFeedbackRepository FeedbackRepository;
+@inject UserManager<User> UserManager;
 @{
     ViewBag.Title = "Подробная информация";
     Layout = "_Layout";
@@ -18,7 +18,7 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            if (!_feedbackRepository.CheckFeedbackExists(int.Parse(_userManager.GetUserId(User)), Model.Id))
+            if (!FeedbackRepository.CheckFeedbackExists(int.Parse(UserManager.GetUserId(User)), Model.Id))
             {
                 <form class="mb-3" id="feedbackForm">
                     <div class="form-group">

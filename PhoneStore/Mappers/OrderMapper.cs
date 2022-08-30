@@ -18,7 +18,7 @@ namespace PhoneStore.Mappers
                 Id = self.Id
             };
         }
-        
+
         public static Order MapToOrder(this OrderViewModel self)
         {
             return new Order

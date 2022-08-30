@@ -4,7 +4,7 @@
     ViewBag.Title = "Смартфоны";
     Layout = "_Layout";
 }
-@if (Model.Phones.Count() == 0)
+@if (!Model.Phones.Any())
 {
     <h2>Список пуст.</h2>
 }
