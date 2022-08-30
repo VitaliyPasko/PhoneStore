@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using PhoneStore.Helpers;
 using PhoneStore.Models;
 
@@ -24,10 +25,9 @@ namespace PhoneStore
             services.AddDbContext<MobileContext>(options => options.UseNpgsql(connection))
                 .AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<MobileContext>();
-            services.AddControllersWithViews();
-            //Можно так подключать сервисы
+            services.AddControllersWithViews().AddNewtonsoftJson(o => 
+                o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddApplicationServices(Configuration);
-            //А можно так
             RepositoryConnector.AddRepositories(services);
             services.AddValidationServices();
             services.AddCors();

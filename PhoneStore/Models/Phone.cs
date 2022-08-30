@@ -10,6 +10,6 @@ namespace PhoneStore.Models
         public int BrandId { get; set; }
         public Brand Brand { get; set; }
         public string Image { get; set; }
-        public List<Feedback> Feedbacks { get; set; }
+        public IEnumerable<Feedback> Feedbacks { get; set; }
     }
 }

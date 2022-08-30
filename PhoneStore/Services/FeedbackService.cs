@@ -1,10 +1,12 @@
 using System;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using PhoneStore.Mappers;
 using PhoneStore.Models;
 using PhoneStore.Repositories.Interfaces;
 using PhoneStore.Services.Interfaces;
+using PhoneStore.ViewModels;
 using PhoneStore.ViewModels.Feedback;
 
 namespace PhoneStore.Services
@@ -13,13 +15,15 @@ namespace PhoneStore.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IFeedbackRepository _feedbackRepository;
+        private readonly MobileContext _db;
 
         public FeedbackService(
             UserManager<User> userManager, 
-            IFeedbackRepository feedbackRepository)
+            IFeedbackRepository feedbackRepository, MobileContext db)
         {
             _userManager = userManager;
             _feedbackRepository = feedbackRepository;
+            _db = db;
         }
 
         public FeedbackViewModel Create(FeedbackCreateViewModel model, ClaimsPrincipal user)
@@ -58,6 +62,19 @@ namespace PhoneStore.Services
             return _feedbackRepository
                 .GetById(id)
                 .MapToFeedbackViewModel();
+        }
+
+        public PersonalAreaViewModel GetPersonalViewModel(int userId)
+        {
+            PersonalAreaViewModel model = new PersonalAreaViewModel
+            {
+                Feedbacks = _feedbackRepository
+                    .GetByUserId(userId)
+                    .Select(f => f.MapToFeedbackViewModel()),
+                User = _db.Users.FirstOrDefault(u => u.Id == userId).MapToUserViewModel()
+            };
+
+            return model;
         }
     }
 }

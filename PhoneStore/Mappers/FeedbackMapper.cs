@@ -13,8 +13,8 @@ namespace PhoneStore.Mappers
                 Text = self.Text,
                 PhoneId = self.PhoneId,
                 UserId = self.UserId,
-                User = self.User.MapToUserViewModel(),
-                Phone = self.Phone.MapToPhoneViewModel(),
+                User = self.User?.MapToUserViewModel(),
+                Phone = self.Phone?.MapToPhoneViewModel(),
                 CreationDateTime = self.CreationDateTime
             };
             return feedbackViewModel;

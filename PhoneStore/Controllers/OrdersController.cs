@@ -48,8 +48,15 @@ namespace PhoneStore.Controllers
         public IActionResult Create(OrderViewModel order)
         {
             order.UserId = int.Parse(_userManager.GetUserId(User));
+            order.User = null;
             _orderService.Create(order.MapToOrderViewModel());
             return RedirectToAction("Index");
+        }
+
+        public IActionResult GetAllByUserId(int id)
+        {
+            var model = _orderService.GetByUserId(id);
+            return Json(model);
         }
     }
 }

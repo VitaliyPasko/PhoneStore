@@ -15,9 +15,6 @@ namespace PhoneStore.Repositories
             _db = db;
         }
 
-        public IEnumerable<Feedback> GetAllByUserId(int userId)
-            => _db.Feedbacks.Where(f => f.UserId == userId);
-
         public Feedback GetById(int id)
         {
             return _db.Feedbacks
@@ -41,7 +38,10 @@ namespace PhoneStore.Repositories
             _db.SaveChanges();
         }
 
-        public IEnumerable<Order> GetByUserId(int id)
-            => _db.Orders.Where(o => o.UserId == id);
+        public IEnumerable<Feedback> GetByUserId(int id)
+            => _db.Feedbacks
+                .Include(f => f.Phone)
+                .Include(f => f.User)
+                .Where(o => o.UserId == id);
     }
 }

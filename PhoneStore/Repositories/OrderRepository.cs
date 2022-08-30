@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PhoneStore.Models;
 using PhoneStore.Repositories.Interfaces;
+using PhoneStore.Repositories.Interfaces.Base;
 
 namespace PhoneStore.Repositories
 {
@@ -30,6 +31,8 @@ namespace PhoneStore.Repositories
         public Order GetById(int id) 
             => _db.Orders
                 .Include(o => o.Phone)
+                .ThenInclude(p => p.Brand)
+                .Include(p => p.Phone.Feedbacks)
                 .Include(o => o.User)
                 .FirstOrDefault(o => o.Id == id);
 
@@ -37,9 +40,12 @@ namespace PhoneStore.Repositories
         {
             return _db.Orders
                 .Include(p => p.Phone)
+                .ThenInclude(p => p.Brand)
+                .Include(p => p.Phone.Feedbacks)
                 .Include(p => p.User)
                 .ToList();
         }
+
 
         public IEnumerable<Order> GetByUserId(int id)
             => _db.Orders

@@ -77,3 +77,36 @@ body {
 .w_15 {
   width: 15%;
 }
+
+.tabs{
+  padding: 40px;
+}
+
+.tab-items{
+  margin-bottom: -1px;
+  position: relative;
+  z-index: 10;
+}
+
+.tab-items a{
+  display: inline-block;
+  padding: 1px 25px;
+  border: 1px solid gold;
+  border-bottom: none;
+  background: #c69500;
+  color: black;
+  text-decoration: none;
+}
+
+.tab-items a.active{
+  color: #9fcdff;
+  background: #fff;
+}
+
+.tabs .tab-content{
+  padding: 20px;
+  border: 1px solid silver;
+  /*display: none;*/
+  position: relative;
+  z-index: 9;
+}

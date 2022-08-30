@@ -8,7 +8,6 @@ namespace PhoneStore.Services.Interfaces
     {
         IEnumerable<OrderViewModel> GetAll();
         void Create(Order order);
-        OrderViewModel GetById(int id);
         IEnumerable<OrderViewModel> GetByUserId(int id);
     }
 }

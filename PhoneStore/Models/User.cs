@@ -7,5 +7,7 @@ namespace PhoneStore.Models
     {
         public string Name { get; set; }
         public int Age { get; set; }
+        public IEnumerable<Feedback> Feedbacks { get; set; }
+        public IEnumerable<Order> Orders { get; set; }
     }
 }
