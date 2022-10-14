@@ -54,29 +54,53 @@ namespace PhoneStore.Controllers
             return View(model);
         }
         
+        // [HttpPost]
+        // public async Task<IActionResult> Create(PhoneCreateViewModel model)
+        // {
+        //     try
+        //     {
+        //         if (ModelState.IsValid)
+        //         {
+        //             await _phoneService.CreateAsync(model);
+        //
+        //             return RedirectToAction("Index");
+        //         }
+        //
+        //         model.Brands = _db.Brands.ToList();
+        //         return View("Create", model);
+        //     }
+        //     //TODO: Добавить кастомный exception
+        //     catch (FileNotFoundException)
+        //     {
+        //         return RedirectToAction("Error", "Errors", new {statusCode = 666});
+        //     }
+        //     catch(Exception)
+        //     {
+        //         return RedirectToAction("Error", "Errors", new {statusCode = 777});
+        //     }
+        // }
+        
         [HttpPost]
-        public async Task<IActionResult> Create(PhoneCreateViewModel model)
+        public async Task<IActionResult> Create([FromBody]PhoneCreateViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     await _phoneService.CreateAsync(model);
-
-                    return RedirectToAction("Index");
+                    return Ok();
                 }
 
                 model.Brands = _db.Brands.ToList();
-                return View("Create", model);
+                return ValidationProblem();
             }
-            //TODO: Добавить кастомный exception
             catch (FileNotFoundException)
             {
-                return RedirectToAction("Error", "Errors", new {statusCode = 666});
+                return BadRequest();
             }
             catch(Exception)
             {
-                return RedirectToAction("Error", "Errors", new {statusCode = 777});
+                return BadRequest();
             }
         }
 
@@ -138,19 +162,34 @@ namespace PhoneStore.Controllers
             return RedirectToAction("Index");
         }
 
+        // [HttpGet]
+        // public IActionResult About(int? phoneId)
+        // {
+        //     try
+        //     {
+        //         if (!phoneId.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
+        //         var phoneViewModel = _phoneService.GetById(phoneId.Value);
+        //         return View(phoneViewModel);
+        //     }
+        //     catch (NullReferenceException)
+        //     {
+        //         return RedirectToAction("Error", "Errors", new {statusCode = 777});
+        //     }
+        // }
         [HttpGet]
         public IActionResult About(int? phoneId)
         {
             try
             {
-                if (!phoneId.HasValue) return RedirectToAction("Error", "Errors", new {statusCode = 777});
+                if (!phoneId.HasValue) return ValidationProblem();
                 var phoneViewModel = _phoneService.GetById(phoneId.Value);
-                return View(phoneViewModel);
+                return Ok(phoneViewModel);
             }
             catch (NullReferenceException)
             {
-                return RedirectToAction("Error", "Errors", new {statusCode = 777});
+                return BadRequest();
             }
         }
+        
     }
 }
