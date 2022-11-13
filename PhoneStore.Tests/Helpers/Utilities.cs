@@ -10,7 +10,7 @@ namespace PhoneStore.Tests.Helpers
     public static class Utilities
     {
         private const string ConnectionString =
-            "Server=localhost;Port=54320;database=testDb;Username=postgres;Password=postgres;";
+            "Server=localhost;Port=5432;database=testDb;Username=postgres;Password=postgres;";
         public static WebApplicationFactory<Startup> SubstituteDbOnTestDb()
         {
             return new WebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
