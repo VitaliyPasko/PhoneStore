@@ -1,11 +1,9 @@
-using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using PhoneStore.Enums;
 using PhoneStore.Models;
 using PhoneStore.Tests.Helpers;
 using PhoneStore.ViewModels.PhoneViewModels;
@@ -25,23 +23,7 @@ namespace PhoneStore.Tests
             _httpClient = webHost.CreateClient();
             _context = webHost.Services.CreateScope().ServiceProvider.GetService<MobileContext>();
         }
-        [Fact]
-        public async Task Send_Create_Phone_Returns_Success()
-        {
 
-            var phone = new PhoneCreateViewModel
-            {
-                Name = "Test",
-                Price = 3000M,
-                BrandId = Utilities.CreateBrandAndReturnBrandId(_context)
-            };
-
-            string json = JsonSerializer.Serialize(phone);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync($"Phones/Create", content);
-            response.StatusCode.Should().Be(StatusCodes.Status200OK);
-        }
-        
         [Fact]
         public async Task Send_Create_Phone_With_NotValidName_Returns_BadRequest()
         {

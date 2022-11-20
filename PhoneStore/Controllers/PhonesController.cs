@@ -81,7 +81,7 @@ namespace PhoneStore.Controllers
         // }
         
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm]PhoneCreateViewModel model)
+        public async Task<IActionResult> Create(PhoneCreateViewModel model)
         {
             try
             {
