@@ -81,14 +81,14 @@ namespace PhoneStore.Controllers
         // }
         
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]PhoneCreateViewModel model)
+        public async Task<IActionResult> Create([FromForm]PhoneCreateViewModel model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     await _phoneService.CreateAsync(model);
-                    return Ok();
+                    return Ok("Гут");
                 }
 
                 model.Brands = _db.Brands.ToList();
